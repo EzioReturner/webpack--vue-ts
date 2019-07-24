@@ -10,16 +10,16 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@components/*": ["./src/components/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@views/*": ["./src/views/*"],
-      "@constants/*": ["./src/constants/*"],
-      "@config/*": ["./config/*"],
-      "@model/*": ["./src/model/*"]
+      "@components/*": ["./client/components/*"],
+      "@styles/*": ["./client/styles/*"],
+      "@utils/*": ["./client/utils/*"],
+      "@views/*": ["./client/views/*"],
+      "@constants/*": ["./client/constants/*"],
+      "@config/*": ["./client/config/*"],
+      "@model/*": ["./client/model/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["client/**/*.ts", "client/**/*.tsx", "client/**/*.vue"],
   "exclude": ["node_modules", "tests/*"]
 }
