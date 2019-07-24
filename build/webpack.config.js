@@ -378,6 +378,20 @@ module.exports = () => {
         formatter: 'codeframe',
         checkSyntacticErrors: false
       })
+    ],
+    optimization: [
+      new UglifyJSPlugin({
+        uglifyOptions: {
+          output: {
+            comments: false
+          },
+          compress: {
+            warnings: false,
+            drop_debugger: true,
+            drop_console: true
+          }
+        }
+      })
     ]
   };
 };
@@ -389,12 +403,6 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
       }
     }),
     new webpack.LoaderOptionsPlugin({
