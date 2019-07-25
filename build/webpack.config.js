@@ -1,5 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const postcssNormalize = require('postcss-normalize');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,7 +8,14 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 // const notifier = require('node-notifier');
 // const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const { HotModuleReplacementPlugin, ProgressPlugin, IgnorePlugin } = webpack;
+const { ProgressPlugin, IgnorePlugin } = webpack;
+
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 
 module.exports = webpackEnv => {
   const isEnvDevelopment = webpackEnv === 'development';
@@ -75,6 +82,26 @@ module.exports = webpackEnv => {
     },
     module: {
       rules: [
+        // Disable require.ensure as it's not a standard language feature.
+        { parser: { requireEnsure: false } },
+        // First, run the linter.
+        // It's important to do this before Babel processes the JS.
+        {
+          enforce: 'pre',
+          test: /\.(vue|(j|t)sx?)$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'eslint-loader',
+              options: {
+                extensions: ['.js', '.jsx', '.vue', '.ts', '.tsx'],
+                cache: true,
+                emitWarning: true,
+                emitError: false
+              }
+            }
+          ]
+        },
         {
           test: /\.vue$/,
           use: [
@@ -160,119 +187,10 @@ module.exports = webpackEnv => {
                 }
               ]
             },
-            /* config.module.rule('scss|sass') */
+            /* config.module.rule('css') */
             {
-              test: /\.(scss|sass)$/,
-              oneOf: [
-                {
-                  resourceQuery: /module/,
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2,
-                      modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]'
-                    },
-                    'sass-loader'
-                  )
-                },
-                {
-                  resourceQuery: /\?vue/,
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2
-                    },
-                    'sass-loader'
-                  )
-                },
-                {
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2
-                    },
-                    'sass-loader'
-                  )
-                }
-              ]
-            },
-            /* config.module.rule('less') */
-            {
-              test: /\.less$/,
-              oneOf: [
-                {
-                  resourceQuery: /module/,
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2,
-                      modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]'
-                    },
-                    'less-loader'
-                  )
-                },
-                {
-                  resourceQuery: /\?vue/,
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2
-                    },
-                    'less-loader'
-                  )
-                },
-                {
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2
-                    },
-                    'less-loader'
-                  )
-                }
-              ]
-            },
-            /* config.module.rule('less') */
-            {
-              test: /\.less$/,
-              oneOf: [
-                {
-                  resourceQuery: /module/,
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2,
-                      modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]'
-                    },
-                    'less-loader'
-                  )
-                },
-                {
-                  resourceQuery: /\?vue/,
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2
-                    },
-                    'less-loader'
-                  )
-                },
-                {
-                  use: getStyleLoaders(
-                    {
-                      sourceMap: false,
-                      importLoaders: 2
-                    },
-                    'less-loader'
-                  )
-                }
-              ]
-            },
-            {
-              test: /\.css$/,
+              test: cssRegex,
+              exclude: cssModuleRegex,
               oneOf: [
                 {
                   resourceQuery: /module/,
@@ -284,19 +202,101 @@ module.exports = webpackEnv => {
                   })
                 },
                 {
-                  resourceQuery: /\?vue/,
-                  use: getStyleLoaders({
-                    sourceMap: false,
-                    importLoaders: 2
-                  })
-                },
-                {
                   use: getStyleLoaders({
                     sourceMap: false,
                     importLoaders: 2
                   })
                 }
-              ]
+              ],
+              sideEffects: true
+            },
+            {
+              test: cssModuleRegex,
+              use: getStyleLoaders({
+                importLoaders: 1,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: true
+              })
+            },
+            /* config.module.rule('scss|sass') */
+            {
+              test: sassRegex,
+              exclude: sassModuleRegex,
+              oneOf: [
+                {
+                  resourceQuery: /module/,
+                  use: getStyleLoaders(
+                    {
+                      sourceMap: false,
+                      importLoaders: 2,
+                      modules: true,
+                      localIdentName: '[name]_[local]_[hash:base64:5]'
+                    },
+                    'sass-loader'
+                  )
+                },
+                {
+                  use: getStyleLoaders(
+                    {
+                      sourceMap: false,
+                      importLoaders: 2
+                    },
+                    'sass-loader'
+                  )
+                }
+              ],
+              sideEffects: true
+            },
+            {
+              test: sassModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 1,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  modules: true
+                },
+                'sass-loader'
+              )
+            },
+            /* config.module.rule('less') */
+            {
+              test: lessRegex,
+              exclude: lessModuleRegex,
+              oneOf: [
+                {
+                  resourceQuery: /module/,
+                  use: getStyleLoaders(
+                    {
+                      sourceMap: false,
+                      importLoaders: 2,
+                      modules: true,
+                      localIdentName: '[name]_[local]_[hash:base64:5]'
+                    },
+                    'less-loader'
+                  )
+                },
+                {
+                  use: getStyleLoaders(
+                    {
+                      sourceMap: false,
+                      importLoaders: 2
+                    },
+                    'less-loader'
+                  )
+                }
+              ],
+              sideEffects: true
+            },
+            {
+              test: lessModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 1,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  modules: true
+                },
+                'less-loader'
+              )
             },
             {
               test: /\.ts$/,
