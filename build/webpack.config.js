@@ -95,9 +95,8 @@ module.exports = webpackEnv => {
               loader: 'eslint-loader',
               options: {
                 extensions: ['.js', '.jsx', '.vue', '.ts', '.tsx'],
-                cache: true,
                 emitWarning: true,
-                emitError: false
+                emitError: true
               }
             }
           ]
