@@ -12,8 +12,6 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.js"
   },
   "dependencies": {
-    "create-react-app": "^3.0.1",
-    "global": "^4.4.0",
     "vue": "^2.6.10",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^6.0.0",
@@ -34,7 +32,6 @@
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-env": "^1.7.0",
     "cache-loader": "^4.1.0",
-    "chalk": "^2.4.2",
     "cross-env": "^5.2.0",
     "css-loader": "^3.1.0",
     "file-loader": "^4.1.0",
@@ -54,7 +51,6 @@
     "ts-jest": "^23.10.3",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
-    "uglifyjs-webpack-plugin": "^2.1.3",
     "url-loader": "^2.1.0",
     "vue-jest": "^2.6.0",
     "vue-loader": "^15.7.1",

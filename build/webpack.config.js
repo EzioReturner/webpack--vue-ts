@@ -22,12 +22,12 @@ module.exports = webpackEnv => {
         loader: require.resolve('vue-style-loader'),
         options: {
           sourceMap: false,
-          shadowMode: false,
-        },
+          shadowMode: false
+        }
       },
       {
         loader: require.resolve('css-loader'),
-        options: cssOption,
+        options: cssOption
       },
       {
         loader: require.resolve('postcss-loader'),
@@ -38,40 +38,40 @@ module.exports = webpackEnv => {
             require('postcss-flexbugs-fixes'),
             require('postcss-preset-env')({
               autoprefixer: {
-                flexbox: 'no-2009',
+                flexbox: 'no-2009'
               },
-              stage: 3,
+              stage: 3
             }),
-            postcssNormalize(),
-          ],
-        },
-      },
+            postcssNormalize()
+          ]
+        }
+      }
     ];
     if (preProcessor) {
       loaders.push({
         loader: require.resolve(preProcessor),
         options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap,
-        },
+          sourceMap: isEnvProduction && shouldUseSourceMap
+        }
       });
     }
     return loaders;
   };
-
   return {
+    mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     entry: {
-      app: './client/index.ts',
+      app: './client/index.ts'
     },
     output: {
       path: path.resolve(__dirname, './dist'),
       publicPath: '/',
-      filename: '[name].js',
+      filename: '[name].js'
     },
     resolve: {
       extensions: ['.ts', '.js', '.vue', '.json'],
       alias: {
-        vue$: 'vue/dist/vue.esm.js',
-      },
+        vue$: 'vue/dist/vue.esm.js'
+      }
     },
     module: {
       rules: [
@@ -83,11 +83,11 @@ module.exports = webpackEnv => {
               loader: 'vue-loader',
               options: {
                 compilerOptions: {
-                  preserveWhitespace: false,
-                },
-              },
-            },
-          ],
+                  preserveWhitespace: false
+                }
+              }
+            }
+          ]
         },
         {
           oneOf: [
@@ -102,12 +102,12 @@ module.exports = webpackEnv => {
                     fallback: {
                       loader: 'file-loader',
                       options: {
-                        name: 'img/[name].[hash:8].[ext]',
-                      },
-                    },
-                  },
-                },
-              ],
+                        name: 'img/[name].[hash:8].[ext]'
+                      }
+                    }
+                  }
+                }
+              ]
             },
             /* config.module.rule('svg') */
             {
@@ -117,10 +117,10 @@ module.exports = webpackEnv => {
                 {
                   loader: 'file-loader',
                   options: {
-                    name: 'img/[name].[hash:8].[ext]',
-                  },
-                },
-              ],
+                    name: 'img/[name].[hash:8].[ext]'
+                  }
+                }
+              ]
             },
             /* config.module.rule('media') */
             {
@@ -134,12 +134,12 @@ module.exports = webpackEnv => {
                     fallback: {
                       loader: 'file-loader',
                       options: {
-                        name: 'media/[name].[hash:8].[ext]',
-                      },
-                    },
-                  },
-                },
-              ],
+                        name: 'media/[name].[hash:8].[ext]'
+                      }
+                    }
+                  }
+                }
+              ]
             },
             /* config.module.rule('fonts') */
             {
@@ -153,12 +153,12 @@ module.exports = webpackEnv => {
                     fallback: {
                       loader: 'file-loader',
                       options: {
-                        name: 'fonts/[name].[hash:8].[ext]',
-                      },
-                    },
-                  },
-                },
-              ],
+                        name: 'fonts/[name].[hash:8].[ext]'
+                      }
+                    }
+                  }
+                }
+              ]
             },
             /* config.module.rule('scss|sass') */
             {
@@ -171,31 +171,31 @@ module.exports = webpackEnv => {
                       sourceMap: false,
                       importLoaders: 2,
                       modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]',
+                      localIdentName: '[name]_[local]_[hash:base64:5]'
                     },
                     'sass-loader'
-                  ),
+                  )
                 },
                 {
                   resourceQuery: /\?vue/,
                   use: getStyleLoaders(
                     {
                       sourceMap: false,
-                      importLoaders: 2,
+                      importLoaders: 2
                     },
                     'sass-loader'
-                  ),
+                  )
                 },
                 {
                   use: getStyleLoaders(
                     {
                       sourceMap: false,
-                      importLoaders: 2,
+                      importLoaders: 2
                     },
                     'sass-loader'
-                  ),
-                },
-              ],
+                  )
+                }
+              ]
             },
             /* config.module.rule('less') */
             {
@@ -208,31 +208,31 @@ module.exports = webpackEnv => {
                       sourceMap: false,
                       importLoaders: 2,
                       modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]',
+                      localIdentName: '[name]_[local]_[hash:base64:5]'
                     },
                     'less-loader'
-                  ),
+                  )
                 },
                 {
                   resourceQuery: /\?vue/,
                   use: getStyleLoaders(
                     {
                       sourceMap: false,
-                      importLoaders: 2,
+                      importLoaders: 2
                     },
                     'less-loader'
-                  ),
+                  )
                 },
                 {
                   use: getStyleLoaders(
                     {
                       sourceMap: false,
-                      importLoaders: 2,
+                      importLoaders: 2
                     },
                     'less-loader'
-                  ),
-                },
-              ],
+                  )
+                }
+              ]
             },
             /* config.module.rule('less') */
             {
@@ -245,31 +245,31 @@ module.exports = webpackEnv => {
                       sourceMap: false,
                       importLoaders: 2,
                       modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]',
+                      localIdentName: '[name]_[local]_[hash:base64:5]'
                     },
                     'less-loader'
-                  ),
+                  )
                 },
                 {
                   resourceQuery: /\?vue/,
                   use: getStyleLoaders(
                     {
                       sourceMap: false,
-                      importLoaders: 2,
+                      importLoaders: 2
                     },
                     'less-loader'
-                  ),
+                  )
                 },
                 {
                   use: getStyleLoaders(
                     {
                       sourceMap: false,
-                      importLoaders: 2,
+                      importLoaders: 2
                     },
                     'less-loader'
-                  ),
-                },
-              ],
+                  )
+                }
+              ]
             },
             {
               test: /\.css$/,
@@ -280,23 +280,23 @@ module.exports = webpackEnv => {
                     sourceMap: false,
                     importLoaders: 2,
                     modules: true,
-                    localIdentName: '[name]_[local]_[hash:base64:5]',
-                  }),
+                    localIdentName: '[name]_[local]_[hash:base64:5]'
+                  })
                 },
                 {
                   resourceQuery: /\?vue/,
                   use: getStyleLoaders({
                     sourceMap: false,
-                    importLoaders: 2,
-                  }),
+                    importLoaders: 2
+                  })
                 },
                 {
                   use: getStyleLoaders({
                     sourceMap: false,
-                    importLoaders: 2,
-                  }),
-                },
-              ],
+                    importLoaders: 2
+                  })
+                }
+              ]
             },
             {
               test: /\.ts$/,
@@ -309,10 +309,10 @@ module.exports = webpackEnv => {
                   options: {
                     transpileOnly: true,
                     happyPackMode: false,
-                    appendTsSuffixTo: [/\.vue$/],
-                  },
-                },
-              ],
+                    appendTsSuffixTo: [/\.vue$/]
+                  }
+                }
+              ]
             },
             {
               test: /\.tsx$/,
@@ -325,22 +325,17 @@ module.exports = webpackEnv => {
                   options: {
                     transpileOnly: true,
                     happyPackMode: false,
-                    appendTsxSuffixTo: [/\.vue$/],
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    devServer: {
-      port: 9528,
-      https: false,
-      quiet: true,
+                    appendTsxSuffixTo: [/\.vue$/]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     performance: {
-      hints: false,
+      hints: false
     },
     devtool: '#eval-source-map',
     plugins: [
@@ -358,9 +353,8 @@ module.exports = webpackEnv => {
         //     subtitle: error.file || ''
         //   });
         // },
-        clearConsole: true,
+        clearConsole: true
       }),
-      isEnvDevelopment && new HotModuleReplacementPlugin(),
       new ManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
@@ -371,9 +365,9 @@ module.exports = webpackEnv => {
           }, seed);
 
           return {
-            files: manifestFiles,
+            files: manifestFiles
           };
-        },
+        }
       }),
       new ProgressPlugin(),
       new HtmlWebpackPlugin({
@@ -381,8 +375,8 @@ module.exports = webpackEnv => {
         filename: 'index.html',
         inject: 'body',
         minify: {
-          removeComments: true,
-        },
+          removeComments: true
+        }
       }),
       // new IgnorePlugin(/^\.\/locale$/, /moment$/),
       isEnvDevelopment &&
@@ -390,9 +384,9 @@ module.exports = webpackEnv => {
           vue: true,
           tslint: false,
           formatter: 'codeframe',
-          checkSyntacticErrors: false,
-        }),
-    ],
+          checkSyntacticErrors: false
+        })
+    ]
   };
 };
 

@@ -8,7 +8,7 @@ export default class HelloDecorator extends Vue {
     return (
       <div>
         123
-        <div>123</div>
+        <div class={styles.colorful}>4122345</div>
       </div>
     );
   }
