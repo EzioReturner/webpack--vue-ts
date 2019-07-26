@@ -6,9 +6,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
 // const notifier = require('node-notifier');
 // const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const { ProgressPlugin, IgnorePlugin } = webpack;
+const paths = require('./paths');
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -17,11 +22,15 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+
+const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
+
 module.exports = webpackEnv => {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
-  const shouldUseSourceMap = false;
-  const publicPath = '/';
+
+  const publicPath = './';
 
   const getStyleLoaders = (cssOption, preProcessor) => {
     const loaders = [
@@ -31,6 +40,10 @@ module.exports = webpackEnv => {
           sourceMap: false,
           shadowMode: false
         }
+      },
+      isEnvProduction && {
+        loader: MiniCssExtractPlugin.loader,
+        options: publicPath === './' ? { publicPath: '../../' } : {}
       },
       {
         loader: require.resolve('css-loader'),
@@ -53,7 +66,7 @@ module.exports = webpackEnv => {
           ]
         }
       }
-    ];
+    ].filter(Boolean);
     if (preProcessor) {
       loaders.push({
         loader: require.resolve(preProcessor),
@@ -71,7 +84,7 @@ module.exports = webpackEnv => {
     },
     output: {
       path: path.resolve(__dirname, './dist'),
-      publicPath: '/',
+      publicPath: publicPath,
       filename: '[name].js'
     },
     resolve: {
@@ -79,6 +92,55 @@ module.exports = webpackEnv => {
       alias: {
         vue$: 'vue/dist/vue.esm.js'
       }
+    },
+    optimization: {
+      minimize: isEnvProduction,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            parse: {
+              ecma: 8
+            },
+            compress: {
+              ecma: 5,
+              warnings: false,
+              comparisons: false,
+              inline: 2
+            },
+            mangle: {
+              safari10: true
+            },
+            output: {
+              ecma: 5,
+              comments: false,
+              ascii_only: true
+            }
+          },
+          cache: true,
+          sourceMap: shouldUseSourceMap,
+          parallel: true
+        }),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            parser: safePostCssParser,
+            map: shouldUseSourceMap
+              ? {
+                  // `inline: false` forces the sourcemap to be output into a
+                  // separate file
+                  inline: false,
+                  // `annotation: true` appends the sourceMappingURL to the end of
+                  // the css file, helping the browser find the sourcemap
+                  annotation: true
+                }
+              : false
+          }
+        })
+      ],
+      splitChunks: {
+        chunks: 'all',
+        name: false
+      },
+      runtimeChunk: true
     },
     module: {
       rules: [
@@ -128,7 +190,7 @@ module.exports = webpackEnv => {
                     fallback: {
                       loader: 'file-loader',
                       options: {
-                        name: 'img/[name].[hash:8].[ext]'
+                        name: 'static/img/[name].[hash:8].[ext]'
                       }
                     }
                   }
@@ -143,7 +205,7 @@ module.exports = webpackEnv => {
                 {
                   loader: 'file-loader',
                   options: {
-                    name: 'img/[name].[hash:8].[ext]'
+                    name: 'static/img/[name].[hash:8].[ext]'
                   }
                 }
               ]
@@ -160,7 +222,7 @@ module.exports = webpackEnv => {
                     fallback: {
                       loader: 'file-loader',
                       options: {
-                        name: 'media/[name].[hash:8].[ext]'
+                        name: 'static/media/[name].[hash:8].[ext]'
                       }
                     }
                   }
@@ -179,7 +241,7 @@ module.exports = webpackEnv => {
                     fallback: {
                       loader: 'file-loader',
                       options: {
-                        name: 'fonts/[name].[hash:8].[ext]'
+                        name: 'static/fonts/[name].[hash:8].[ext]'
                       }
                     }
                   }
@@ -369,37 +431,49 @@ module.exports = webpackEnv => {
         }
       }),
       new ProgressPlugin(),
-      new HtmlWebpackPlugin({
-        template: path.join(__dirname, '../public/index.html'),
-        filename: 'index.html',
-        inject: 'body',
-        minify: {
-          removeComments: true
-        }
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            template: paths.appHtml,
+            inject: true
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true
+                }
+              }
+            : undefined
+        )
+      ),
+      new IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new ForkTsCheckerWebpackPlugin({
+        vue: true,
+        tslint: false,
+        async: isEnvDevelopment,
+        formatter: 'codeframe',
+        checkSyntacticErrors: true,
+        useTypescriptIncrementalApi: true,
+        watch: paths.appSrc,
+        tsconfig: paths.appTsConfig
       }),
-      // new IgnorePlugin(/^\.\/locale$/, /moment$/),
-      isEnvDevelopment &&
-        new ForkTsCheckerWebpackPlugin({
-          vue: true,
-          tslint: false,
-          formatter: 'codeframe',
-          checkSyntacticErrors: false
+      isEnvProduction &&
+        new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: 'static/css/[name].[contenthash:8].css',
+          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css'
         })
-    ]
+    ].filter(Boolean)
   };
 };
-
-// if (process.env.NODE_ENV === 'production') {
-//   module.exports.devtool = '#source-map';
-//   // http://vue-loader.vuejs.org/en/workflow/production.html
-//   module.exports.plugins = (module.exports.plugins || []).concat([
-//     new webpack.DefinePlugin({
-//       'process.env': {
-//         NODE_ENV: '"production"',
-//       },
-//     }),
-//     new webpack.LoaderOptionsPlugin({
-//       minimize: true,
-//     }),
-//   ]);
-// }

@@ -18,7 +18,7 @@ const moduleFileExtensions = [
   'tsx',
   'json',
   'web.jsx',
-  'jsx',
+  'jsx'
 ];
 
 const resolveModule = (resolveFn, filePath) => {
@@ -41,11 +41,11 @@ module.exports = {
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('src'),
+  appSrc: resolveApp('client'),
   appTsConfig: resolveApp('tsconfig.json'),
   appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),
-  appNodeModules: resolveApp('node_modules'),
+  appNodeModules: resolveApp('node_modules')
 };
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
