@@ -1,4 +1,4 @@
-<h1 align="center">Luckyue</h1>
+<h1 align="center">Webpack-Vue-Typescript</h1>
 
 <div align="center">
   A solution of spa vue-cli with typescript
@@ -9,7 +9,6 @@
 - [Vue](https://cn.vuejs.org/)
 - [Vuex](https://vuex.vuejs.org/zh/)(Vue 官方状态管理工具)
 - [Antd-Vue](https://vue.ant.design/)(一套为开发者、设计师和产品经理准备的基于 Vue 2.0 的桌面端组件库)
-- [Egg](https://eggjs.org/zh-cn/)(为企业级框架和应用而生,本项目中 node 版本须>=10.0)
 - [axios](https://github.com/mzabriskie/axios)(<span style="color: rgb(243,121,52);">http 请求模块</span>)
 - [echarts](https://github.com/apache/incubator-echarts)(<span style="color: rgb(243,121,52);">百度开源可视化图表工具</span>)
 - [animate.css](http://daneden.me/animate)(<span style="color: rgb(243,121,52);">css 动画库</span>)
