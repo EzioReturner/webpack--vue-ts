@@ -2,7 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const chalk = require('chalk');
-const { ProgressPlugin, IgnorePlugin, NamedModulesPlugin, BannerPlugin } = webpack;
+const { ProgressPlugin, IgnorePlugin, NamedModulesPlugin, BannerPlugin, DefinePlugin } = webpack;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const postcssNormalize = require('postcss-normalize');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -12,9 +12,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
-
+// const CompressionPlugin = require('compression-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -78,9 +80,17 @@ module.exports = webpackEnv => {
     if (preProcessor) {
       loaders.push({
         loader: require.resolve(preProcessor),
-        options: {
-          sourceMap: isEnvProduction && shouldUseSourceMap
-        }
+        options: Object.assign(
+          {},
+          {
+            sourceMap: isEnvProduction && shouldUseSourceMap
+          },
+          preProcessor === 'less-loader'
+            ? {
+                javascriptEnabled: true
+              }
+            : undefined
+        )
       });
     }
     return loaders;
@@ -114,7 +124,7 @@ module.exports = webpackEnv => {
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js'
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : '#eval-source-map',
     module: {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
@@ -231,7 +241,7 @@ module.exports = webpackEnv => {
                 {
                   resourceQuery: /module/,
                   use: getStyleLoaders({
-                    sourceMap: false,
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
                     importLoaders: 2,
                     modules: true,
                     localIdentName: '[name]_[local]_[hash:base64:5]'
@@ -239,7 +249,7 @@ module.exports = webpackEnv => {
                 },
                 {
                   use: getStyleLoaders({
-                    sourceMap: false,
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
                     importLoaders: 2
                   })
                 }
@@ -249,7 +259,7 @@ module.exports = webpackEnv => {
             {
               test: cssModuleRegex,
               use: getStyleLoaders({
-                importLoaders: 1,
+                importLoaders: 2,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
                 modules: true
               })
@@ -263,7 +273,7 @@ module.exports = webpackEnv => {
                   resourceQuery: /module/,
                   use: getStyleLoaders(
                     {
-                      sourceMap: false,
+                      sourceMap: isEnvProduction && shouldUseSourceMap,
                       importLoaders: 2,
                       modules: true,
                       localIdentName: '[name]_[local]_[hash:base64:5]'
@@ -274,7 +284,7 @@ module.exports = webpackEnv => {
                 {
                   use: getStyleLoaders(
                     {
-                      sourceMap: false,
+                      sourceMap: isEnvProduction && shouldUseSourceMap,
                       importLoaders: 2
                     },
                     'sass-loader'
@@ -303,7 +313,7 @@ module.exports = webpackEnv => {
                   resourceQuery: /module/,
                   use: getStyleLoaders(
                     {
-                      sourceMap: false,
+                      sourceMap: isEnvProduction && shouldUseSourceMap,
                       importLoaders: 2,
                       modules: true,
                       localIdentName: '[name]_[local]_[hash:base64:5]'
@@ -314,7 +324,7 @@ module.exports = webpackEnv => {
                 {
                   use: getStyleLoaders(
                     {
-                      sourceMap: false,
+                      sourceMap: isEnvProduction && shouldUseSourceMap,
                       importLoaders: 2
                     },
                     'less-loader'
@@ -327,7 +337,7 @@ module.exports = webpackEnv => {
               test: lessModuleRegex,
               use: getStyleLoaders(
                 {
-                  importLoaders: 1,
+                  importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
                   modules: true
                 },
@@ -428,11 +438,22 @@ module.exports = webpackEnv => {
       splitChunks: {
         chunks: 'all',
         name: true
+        // maxInitialRequests: Infinity,
+        // minSize: 20000,
+        // cacheGroups: {
+        //   vendor: {
+        //     test: /[\\/]node_modules[\\/]/,
+        //     name(module) {
+        //       // get the name. E.g. node_modules/packageName/not/this/part.js
+        //       // or node_modules/packageName
+        //       const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+        //       // npm package names are URL-safe, but some servers don't like @ symbols
+        //       return `npm.${packageName.replace('@', '')}`;
+        //     }
+        //   }
+        // }
       },
       runtimeChunk: true
-    },
-    performance: {
-      hints: false
     },
     plugins: [
       new VueLoaderPlugin(),
@@ -514,6 +535,15 @@ module.exports = webpackEnv => {
             });
           }
         }),
+
+      isEnvProduction && new BundleAnalyzerPlugin(),
+      // // gzip
+      // isEnvProduction &&
+      //   new CompressionPlugin({
+      //     test: /\.js$|\.html$|.\css/,
+      //     threshold: 10240,
+      //     deleteOriginalAssets: false
+      //   }),
 
       // add plugin banner
       isEnvProduction && new BannerPlugin('luckyue')

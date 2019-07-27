@@ -12,7 +12,7 @@ const webpack = require('webpack');
 //webpack production setting
 const configFactory = require('../build/webpack.config');
 //指定删除的文件
-const rmFile = path.resolve(__dirname, '../public/static');
+const rmFile = path.resolve(__dirname, '../build/dist');
 //build start loading
 const spinner = ora('building for production...');
 spinner.start();
