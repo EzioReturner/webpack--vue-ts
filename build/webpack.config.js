@@ -126,7 +126,7 @@ module.exports = webpackEnv => {
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js'
     },
-    // devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : '#eval-source-map',
+    devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : false,
     module: {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
