@@ -41,6 +41,7 @@
     "fork-ts-checker-webpack-plugin": "^1.4.3",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.1",
     "jest": "^23.6.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
@@ -55,6 +56,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-safe-parser": "^4.0.1",
     "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
     "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.10.3",
@@ -101,6 +103,18 @@
     },
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
+    }
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "printWidth": 100,
+    "trailingComma": "none",
+    "singleQuote": true,
+    "jsxBracketSameLine": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }
