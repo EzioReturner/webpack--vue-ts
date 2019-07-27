@@ -1,11 +1,11 @@
 {
-  "name": "xc-cli",
+  "name": "webpack-vue-typescript",
   "version": "1.0.0",
-  "description": "a simple spa vue-cli",
+  "description": "an solution of spa vue-cli with typescript",
   "scripts": {
-    "dev": "webpack-dev-server --config build/webpack.dev.conf.js",
     "start": "node script/start.js",
-    "build": "node script/build.js"
+    "build": "node script/build.js",
+    "analyze": "node script/build.js --analyze"
   },
   "author": "",
   "license": "ISC",

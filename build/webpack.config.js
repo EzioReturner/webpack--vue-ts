@@ -32,6 +32,8 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 const paths = require('./paths');
 
+const IsAnalyze = process.argv.pop().indexOf('analyze') > -1;
+
 //拼接路径
 function resolve(track) {
   return path.join(__dirname, '..', track);
@@ -124,7 +126,7 @@ module.exports = webpackEnv => {
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js'
     },
-    devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : '#eval-source-map',
+    // devtool: isEnvDevelopment ? 'cheap-module-eval-source-map' : '#eval-source-map',
     module: {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
@@ -345,7 +347,7 @@ module.exports = webpackEnv => {
               )
             },
             {
-              test: /\.jsx?$/,
+              test: /\.jsx$/,
               loader: 'babel-loader',
               exclude: /(node_modules)/
             },
@@ -437,21 +439,21 @@ module.exports = webpackEnv => {
       ],
       splitChunks: {
         chunks: 'all',
-        name: true
-        // maxInitialRequests: Infinity,
-        // minSize: 20000,
-        // cacheGroups: {
-        //   vendor: {
-        //     test: /[\\/]node_modules[\\/]/,
-        //     name(module) {
-        //       // get the name. E.g. node_modules/packageName/not/this/part.js
-        //       // or node_modules/packageName
-        //       const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-        //       // npm package names are URL-safe, but some servers don't like @ symbols
-        //       return `npm.${packageName.replace('@', '')}`;
-        //     }
-        //   }
-        // }
+        name: true,
+        maxInitialRequests: Infinity,
+        minSize: 20000,
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+              // get the name. E.g. node_modules/packageName/not/this/part.js
+              // or node_modules/packageName
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+              // npm package names are URL-safe, but some servers don't like @ symbols
+              return `npm.${packageName.replace('@', '')}`;
+            }
+          }
+        }
       },
       runtimeChunk: true
     },
@@ -536,7 +538,10 @@ module.exports = webpackEnv => {
           }
         }),
 
-      isEnvProduction && new BundleAnalyzerPlugin(),
+      IsAnalyze &&
+        new BundleAnalyzerPlugin({
+          analyzerPort: 8889
+        }),
       // // gzip
       // isEnvProduction &&
       //   new CompressionPlugin({

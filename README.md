@@ -1,10 +1,8 @@
 <h1 align="center">Luckyue</h1>
 
 <div align="center">
-  A front-end solution web applications base on Vue.js Antd-Vue Egg.
+  A solution of spa vue-cli with typescript
 </div>
-
-## wiki 文档 （施工中）
 
 ## dependencies &nbsp; 依赖模块
 
@@ -17,39 +15,6 @@
 - [animate.css](http://daneden.me/animate)(<span style="color: rgb(243,121,52);">css 动画库</span>)
 - [moment](http://momentjs.cn/)(<span style="color: rgb(243,121,52);">时间工具库</span>)
 - [lodash](https://www.lodashjs.com/)(<span style="color: rgb(243,121,52);">是一个一致性、模块化、高性能的 JavaScript 实用工具库。</span>)
-
-## function module &nbsp; 功能模块
-
-```bash
-- 首页
-    - 完整布局
-- 导航菜单
-    - 顶部导航
-    - 左侧菜单
-      - 菜单伸缩
-- 组件
-    - 路由
-      - route 权限校验
-      - 路由配置渲染route
-      - 路由配置渲染菜单
-    - 过渡动画
-    - 基础页面布局
-    - loading遮罩模块
-    - i18n 国际化
-      - 支持多语言翻译
-    - 简易封装了echarts
-- UI组件
-    - 表单页
-    - 列表页
-    - 详情页
-    - 结果页
-    - 异常页
-    - 个人页
-- 图表
-    - echarts图表
-- 多分辨率 & 移动端适配
-- 支持TypeScript
-```
 
 ## 如何启动
 
