@@ -1,0 +1,24 @@
+@import '@styles/color.scss';
+
+.navigator {
+  position: relative;
+  width: 255px;
+  background: #ffffff;
+  box-shadow: 0px 0px 28px rgba($color: $color-primary-low, $alpha: 0.5);
+  z-index: 3;
+  transition: all 0.3s;
+  &.collapsed {
+    width: 80px;
+    .menuTitle {
+      max-width: 0;
+      display: inline-block;
+      opacity: 0;
+    }
+  }
+
+  .menuContainer {
+    height: calc(100% - 83px);
+    overflow: auto;
+    overflow-x: hidden;
+  }
+}

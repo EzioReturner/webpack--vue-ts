@@ -1,0 +1,22 @@
+.header {
+  height: 60px;
+  border-bottom: 1px solid #f5f5f5;
+  box-sizing: border-box;
+  text-align: left;
+  box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, 0.05);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s;
+  flex: 0 0 auto;
+  &.collapsed {
+    left: 80px;
+  }
+
+  .actionPlace {
+    float: right;
+    height: 100%;
+    overflow: hidden;
+  }
+}

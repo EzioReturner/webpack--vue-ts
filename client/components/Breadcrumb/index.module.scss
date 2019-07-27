@@ -1,0 +1,85 @@
+.breadcrumb {
+  height: 40px;
+  box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: flex;
+}
+
+.crumbList {
+  padding: 0;
+  margin: 0 24px;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.crumbUnit {
+  list-style: none;
+  padding: 0 12px;
+  color: rgba($color: #29d, $alpha: 0.6);
+  transition: transform 0.3s, color 0.3s, margin 0.3s;
+  position: relative;
+  &:hover {
+    color: rgba($color: #29d, $alpha: 0.8);
+    transform: scale(1.1);
+    margin-right: 18px;
+    &::before {
+      border: 1px solid rgba($color: #29d, $alpha: 0.8);
+    }
+    .closeIconContainer {
+      opacity: 1;
+      margin-left: 10px;
+      width: auto;
+    }
+  }
+  &::before {
+    content: '';
+    border: 1px solid rgba($color: #29d, $alpha: 0.3);
+    transform: rotate(45deg);
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    top: 9px;
+    left: 0;
+    transition: border 0.3s;
+  }
+  &.displayed {
+    color: rgba($color: #29d, $alpha: 1);
+    &::before {
+      border: 1px solid rgba($color: #29d, $alpha: 1);
+    }
+  }
+  .crumbName {
+    cursor: pointer;
+  }
+  .closeIconContainer {
+    color: #c8c8c8;
+    font-size: 13px;
+    cursor: pointer;
+    opacity: 0;
+    vertical-align: -2px;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+    transition-delay: 0.1s;
+    .closeIcon {
+      vertical-align: bottom;
+      transition: color 0.3s, transform 0.3s;
+      &:hover {
+        color: #f56c6c;
+        transform: scale(1.4);
+      }
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      border-left: 1px solid #f2f2f2;
+      transform: rotate(40deg);
+      height: 30px;
+      top: -6px;
+      right: 13px;
+    }
+  }
+}

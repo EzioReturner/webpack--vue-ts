@@ -1,0 +1,10 @@
+.mainContainer {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewBody {
+  padding: 24px;
+  flex: auto;
+}

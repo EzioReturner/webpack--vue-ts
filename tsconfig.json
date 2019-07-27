@@ -9,8 +9,12 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "moduleResolution": "node",
+    "importHelpers": true,
+    "strictPropertyInitialization": false,
+    "esModuleInterop": true,
+    "allowJs": true,
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./client/*"],
       "@components/*": ["./client/components/*"],
       "@styles/*": ["./client/styles/*"],
       "@utils/*": ["./client/utils/*"],
