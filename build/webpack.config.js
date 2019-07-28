@@ -104,7 +104,7 @@ module.exports = webpackEnv => {
       // import hello from './hello'  （!hello.js? -> !hello.vue? -> !hello.json）
       extensions: ['.ts', '.js', '.vue', '.tsx', '.json'],
       alias: {
-        vue$: 'vue/dist/vue.esm.js',
+        vue$: isEnvDevelopment ? 'vue/dist/vue.esm.js' : 'vue/dist/vue.runtime.esm.js',
         '@': resolve('./client'),
         '@components': resolve('./client/components'),
         '@styles': resolve('./client/styles'),
