@@ -2,7 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const chalk = require('chalk');
-const { ProgressPlugin, IgnorePlugin, NamedModulesPlugin, BannerPlugin, DefinePlugin } = webpack;
+const { ProgressPlugin, IgnorePlugin, NamedModulesPlugin, DefinePlugin } = webpack;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const postcssNormalize = require('postcss-normalize');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -539,9 +539,10 @@ module.exports = webpackEnv => {
         }),
 
       IsAnalyze &&
+        isEnvProduction &&
         new BundleAnalyzerPlugin({
           analyzerPort: 8889
-        }),
+        })
       // // gzip
       // isEnvProduction &&
       //   new CompressionPlugin({
@@ -549,9 +550,6 @@ module.exports = webpackEnv => {
       //     threshold: 10240,
       //     deleteOriginalAssets: false
       //   }),
-
-      // add plugin banner
-      isEnvProduction && new BannerPlugin('luckyue')
     ].filter(Boolean)
   };
 };
