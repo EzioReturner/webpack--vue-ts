@@ -16,6 +16,8 @@ const safePostCssParser = require('postcss-safe-parser');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
 
+const HappyPack = require('happypack');
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const cssRegex = /\.css$/;
@@ -43,6 +45,13 @@ module.exports = webpackEnv => {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const publicPath = './';
+
+  const createHappyPlugin = (id, threads, loaders) =>
+    new HappyPack({
+      id: id,
+      loaders: loaders,
+      threads: threads
+    });
 
   const getStyleLoaders = (cssOption, preProcessor) => {
     const loaders = [
@@ -99,7 +108,7 @@ module.exports = webpackEnv => {
   };
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
-    entry: path.resolve(__dirname, '../client/main.js'),
+    entry: resolve('./client/main.js'),
     resolve: {
       // import hello from './hello'  （!hello.js? -> !hello.vue? -> !hello.json）
       extensions: ['.ts', '.js', '.vue', '.tsx', '.json'],
@@ -117,7 +126,7 @@ module.exports = webpackEnv => {
     },
     output: {
       publicPath: './',
-      path: path.resolve(__dirname, '../build/dist'),
+      path: resolve('./build/dist'),
       //文件名
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
@@ -151,6 +160,7 @@ module.exports = webpackEnv => {
         /* config.module.rule('vue') */
         {
           test: /\.vue$/,
+          include: resolve('./client'),
           use: [
             'cache-loader',
             {
@@ -348,22 +358,19 @@ module.exports = webpackEnv => {
             },
             {
               test: /\.jsx$/,
-              loader: 'babel-loader',
-              exclude: /(node_modules)/
+              exclude: /(node_modules)/,
+              loader: 'happypack/loader?id=happy-babel'
             },
             {
               test: /\.js$/,
-              use: {
-                loader: 'babel-loader'
-              },
-              include: resolve('client')
+              exclude: /node_modules/,
+              loader: 'happypack/loader?id=happy-babel'
             },
             {
               test: /\.ts$/,
               exclude: /node_modules/,
               use: [
-                'cache-loader',
-                'babel-loader',
+                'happypack/loader?id=happy-babel',
                 {
                   loader: 'ts-loader',
                   options: {
@@ -378,8 +385,7 @@ module.exports = webpackEnv => {
               test: /\.tsx$/,
               exclude: /node_modules/,
               use: [
-                'cache-loader',
-                'babel-loader',
+                'happypack/loader?id=happy-babel',
                 {
                   loader: 'ts-loader',
                   options: {
@@ -393,6 +399,10 @@ module.exports = webpackEnv => {
           ]
         }
       ]
+    },
+    performance: {
+      maxEntrypointSize: 2000000,
+      maxAssetSize: 2000000
     },
     optimization: {
       minimize: isEnvProduction,
@@ -463,11 +473,11 @@ module.exports = webpackEnv => {
       // show rate of progress
       new ProgressPlugin(),
 
+      // happypack
+      createHappyPlugin('happy-babel', 4, ['cache-loader', 'babel-loader']),
+
       // relative path
       new NamedModulesPlugin(),
-
-      // enable this plugin it would not quit program when webpack build failed
-      // new webpack.NoEmitOnErrorsPlugin(),
 
       // html entry plugin
       new HtmlWebpackPlugin({
@@ -542,7 +552,9 @@ module.exports = webpackEnv => {
         isEnvProduction &&
         new BundleAnalyzerPlugin({
           analyzerPort: 8889
-        })
+        }),
+
+      isEnvProduction && new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
       // // gzip
       // isEnvProduction &&
       //   new CompressionPlugin({
