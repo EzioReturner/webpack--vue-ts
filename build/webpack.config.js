@@ -2,7 +2,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const chalk = require('chalk');
-const { ProgressPlugin, IgnorePlugin, NamedModulesPlugin, DefinePlugin } = webpack;
+const {
+  ProgressPlugin,
+  IgnorePlugin,
+  NamedModulesPlugin,
+  DefinePlugin,
+  DllReferencePlugin
+} = webpack;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const postcssNormalize = require('postcss-normalize');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -15,6 +21,8 @@ const safePostCssParser = require('postcss-safe-parser');
 // const CompressionPlugin = require('compression-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const HappyPack = require('happypack');
 
@@ -113,7 +121,7 @@ module.exports = webpackEnv => {
       // import hello from './hello'  （!hello.js? -> !hello.vue? -> !hello.json）
       extensions: ['.ts', '.js', '.vue', '.tsx', '.json'],
       alias: {
-        vue$: isEnvDevelopment ? 'vue/dist/vue.esm.js' : 'vue/dist/vue.runtime.esm.js',
+        // vue$: isEnvDevelopment ? 'vue/dist/vue.esm.js' : 'vue/dist/vue.runtime.esm.js',
         '@': resolve('./client'),
         '@components': resolve('./client/components'),
         '@styles': resolve('./client/styles'),
@@ -124,9 +132,16 @@ module.exports = webpackEnv => {
         '@model': resolve('./client/model')
       }
     },
+    // externals: {
+    //   vue$: 'vue/dist/vue.esm.js',
+    //   'vue-router': 'vue-router',
+    //   vuex: 'vuex',
+    //   'ant-design-vue': 'ant-design-vue',
+    //   axios: 'axios'
+    // },
     output: {
       publicPath: './',
-      path: resolve('./build/dist'),
+      path: paths.appBuild,
       //文件名
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
@@ -479,14 +494,6 @@ module.exports = webpackEnv => {
       // relative path
       new NamedModulesPlugin(),
 
-      // html entry plugin
-      new HtmlWebpackPlugin({
-        title: 'Luckyue',
-        filename: 'index.html',
-        template: resolve('public/index.html'),
-        inject: true
-      }),
-
       // module files mapping
       new ManifestPlugin({
         fileName: 'asset-manifest.json',
@@ -519,6 +526,33 @@ module.exports = webpackEnv => {
         checkSyntacticErrors: false
       }),
 
+      // copy dll to dist
+      // new CopyWebpackPlugin([
+      //   {
+      //     from: paths.appDll,
+      //     to: paths.appBuild,
+      //     ignore: ['.*']
+      //   }
+      // ]),
+
+      // dll optimization
+      // new DllReferencePlugin({
+      //   manifest: require('./dll/ueDll.manifest.json')
+      // }),
+
+      // html entry plugin
+      new HtmlWebpackPlugin({
+        title: 'Luckyue',
+        filename: 'index.html',
+        template: paths.appHtml,
+        inject: true
+      }),
+
+      // inject dll to template
+      // new AddAssetHtmlPlugin({
+      //   filepath: path.resolve(__dirname, './dll/*.dll.js')
+      // }),
+
       // compile info plugin
       isEnvDevelopment &&
         new FriendlyErrorsPlugin({
@@ -536,15 +570,15 @@ module.exports = webpackEnv => {
             if (severity !== 'error') {
               return;
             }
-            const error = errors[0];
-            const filename = error.file.split('!').pop();
-            // error notifier
-            notifier.notify({
-              title: 'Luckyue',
-              message: severity + ': ' + error.name,
-              subtitle: filename || '',
-              icon: path.join(__dirname, 'luckyue.png')
-            });
+            // const error = errors[0];
+            // const filename = error.file.split('!').pop();
+            // // error notifier
+            // notifier.notify({
+            //   title: 'Luckyue',
+            //   message: severity + ': ' + error.name,
+            //   subtitle: filename || '',
+            //   icon: path.join(__dirname, 'luckyue.png')
+            // });
           }
         }),
 

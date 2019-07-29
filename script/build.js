@@ -11,18 +11,37 @@ const path = require('path');
 const webpack = require('webpack');
 //webpack production setting
 const configFactory = require('../build/webpack.config');
-//指定删除的文件
+
+const dllConfig = require('../build/webpack.dll');
+
 const rmFile = path.resolve(__dirname, '../build/dist');
 //build start loading
 const spinner = ora({ color: 'green', text: 'building for production...' });
-spinner.start();
 
 const config = configFactory('production');
+
+const { original } = JSON.parse(process.env.npm_config_argv);
+const IsBuildDll = original.pop().indexOf('dll') > -1;
 
 //构建全量压缩包！
 rm(rmFile, function(err) {
   if (err) throw err;
-  webpack(config, function(err, stats) {
+
+  const compiler = webpack(config);
+
+  const dllCompiler = webpack(dllConfig);
+
+  if (IsBuildDll) {
+    const _spinner = ora({ color: 'green', text: 'building for dll-vendor...' });
+    _spinner.start();
+    dllCompiler.run((err, stats) => {
+      _spinner.stop();
+      console.log(chalk.cyan('  Build dll-vendor.\n'));
+    });
+  }
+  spinner.start();
+
+  compiler.run((err, stats) => {
     spinner.stop();
     if (err) throw err;
     process.stdout.write(
@@ -41,11 +60,5 @@ rm(rmFile, function(err) {
     }
 
     console.log(chalk.cyan('  Build complete.\n'));
-    // console.log(
-    //   chalk.yellow(
-    //     '  Tip: built files are meant to be served over an HTTP server.\n' +
-    //       "  Opening index.html over file:// won't work.\n"
-    //   )
-    // );
   });
 });
