@@ -5,7 +5,6 @@
   "scripts": {
     "start": "node script/start.js",
     "build": "node script/build.js",
-    "build:dll": "node script/build.js --dll",
     "analyze": "node script/build.js --analyze"
   },
   "author": "",
