@@ -18,47 +18,65 @@ const rmFile = path.resolve(__dirname, '../build/dist');
 //build start loading
 const spinner = ora({ color: 'green', text: 'building for production...' });
 
-const config = configFactory('production');
-
 const { original } = JSON.parse(process.env.npm_config_argv);
 const IsBuildDll = original.pop().indexOf('dll') > -1;
+
+const buildDll = () => {
+  return new Promise((resolve, reject) => {
+    const _spinner = ora({ color: 'green', text: 'building for dll-vendor...' });
+    console.log(1);
+
+    _spinner.start();
+    if (!IsBuildDll) {
+      _spinner.stop();
+      console.log(2);
+      resolve();
+    } else {
+      const dllCompiler = webpack(dllConfig);
+
+      dllCompiler.run((err, stats) => {
+        console.log(4);
+
+        err && reject(err);
+        _spinner.stop();
+        resolve();
+        console.log(chalk.cyan('Build dll-vendor done \n'));
+      });
+    }
+  });
+};
 
 //构建全量压缩包！
 rm(rmFile, function(err) {
   if (err) throw err;
 
-  const compiler = webpack(config);
+  buildDll()
+    .then(res => {
+      console.log(3);
 
-  const dllCompiler = webpack(dllConfig);
-
-  if (IsBuildDll) {
-    const _spinner = ora({ color: 'green', text: 'building for dll-vendor...' });
-    _spinner.start();
-    dllCompiler.run((err, stats) => {
-      _spinner.stop();
-      console.log(chalk.cyan('  Build dll-vendor.\n'));
+      spinner.start();
+      const config = configFactory('production');
+      const compiler = webpack(config);
+      compiler.run((err, stats) => {
+        spinner.stop();
+        if (err) throw err;
+        process.stdout.write(
+          stats.toString({
+            colors: true,
+            modules: false,
+            children: false,
+            chunks: false,
+            chunkModules: false
+          }) + '\n\n'
+        );
+        if (stats.hasErrors()) {
+          console.log(chalk.red('  Build failed with errors.\n'));
+          process.exit(1);
+        }
+        console.log(chalk.cyan('  Build complete.\n'));
+      });
+    })
+    .catch(err => {
+      if (err) throw err;
     });
-  }
-  spinner.start();
-
-  compiler.run((err, stats) => {
-    spinner.stop();
-    if (err) throw err;
-    process.stdout.write(
-      stats.toString({
-        colors: true,
-        modules: false,
-        children: false,
-        chunks: false,
-        chunkModules: false
-      }) + '\n\n'
-    );
-
-    if (stats.hasErrors()) {
-      console.log(chalk.red('  Build failed with errors.\n'));
-      process.exit(1);
-    }
-
-    console.log(chalk.cyan('  Build complete.\n'));
-  });
 });

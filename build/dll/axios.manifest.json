@@ -1,0 +1,98 @@
+{
+  "name": "_dll_axios",
+  "content": {
+    "./node_modules/axios/lib/utils.js": { "id": 49, "buildMeta": { "providedExports": true } },
+    "./node_modules/process/browser.js": { "id": 115, "buildMeta": { "providedExports": true } },
+    "./node_modules/axios/lib/helpers/bind.js": {
+      "id": 544,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/buildURL.js": {
+      "id": 545,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/cancel/isCancel.js": {
+      "id": 546,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/defaults.js": { "id": 547, "buildMeta": { "providedExports": true } },
+    "./node_modules/axios/lib/adapters/xhr.js": {
+      "id": 548,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/createError.js": {
+      "id": 549,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/mergeConfig.js": {
+      "id": 550,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/cancel/Cancel.js": {
+      "id": 551,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/index.js": { "id": 885, "buildMeta": { "providedExports": true } },
+    "./node_modules/axios/lib/axios.js": { "id": 886, "buildMeta": { "providedExports": true } },
+    "./node_modules/axios/node_modules/is-buffer/index.js": {
+      "id": 887,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/Axios.js": {
+      "id": 888,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/InterceptorManager.js": {
+      "id": 889,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/dispatchRequest.js": {
+      "id": 890,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/transformData.js": {
+      "id": 891,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/normalizeHeaderName.js": {
+      "id": 892,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/settle.js": {
+      "id": 893,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/core/enhanceError.js": {
+      "id": 894,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/parseHeaders.js": {
+      "id": 895,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/isURLSameOrigin.js": {
+      "id": 896,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/cookies.js": {
+      "id": 897,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/isAbsoluteURL.js": {
+      "id": 898,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/combineURLs.js": {
+      "id": 899,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/cancel/CancelToken.js": {
+      "id": 900,
+      "buildMeta": { "providedExports": true }
+    },
+    "./node_modules/axios/lib/helpers/spread.js": {
+      "id": 901,
+      "buildMeta": { "providedExports": true }
+    }
+  }
+}

@@ -4,9 +4,9 @@ const webpack = require('webpack');
 const chalk = require('chalk');
 const {
   ProgressPlugin,
-  IgnorePlugin,
+  // IgnorePlugin,
   NamedModulesPlugin,
-  DefinePlugin,
+  // DefinePlugin,
   DllReferencePlugin
 } = webpack;
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
@@ -18,13 +18,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
-// const CompressionPlugin = require('compression-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const notifier = require('node-notifier');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-
 const HappyPack = require('happypack');
+const { library, libVersion } = require('../package.json');
+const paths = require('./paths');
+
+// const CompressionPlugin = require('compression-webpack-plugin');
+// const notifier = require('node-notifier');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -35,12 +36,12 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
 
+const lib_version = libVersion.replace(/\./g, '_');
+
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
 const PORT = parseInt(process.env.PORT, 10) || 9528;
 const HOST = process.env.HOST || '0.0.0.0';
-
-const paths = require('./paths');
 
 const IsAnalyze = process.argv.pop().indexOf('analyze') > -1;
 
@@ -137,11 +138,12 @@ module.exports = webpackEnv => {
     //   'vue-router': 'vue-router',
     //   vuex: 'vuex',
     //   'ant-design-vue': 'ant-design-vue',
-    //   axios: 'axios'
+    //   axios: 'axios',
+    //   lodash: 'lodash'
     // },
     output: {
       publicPath: './',
-      path: paths.appBuild,
+      path: paths.appBuildDist,
       //文件名
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
@@ -526,20 +528,6 @@ module.exports = webpackEnv => {
         checkSyntacticErrors: false
       }),
 
-      // copy dll to dist
-      // new CopyWebpackPlugin([
-      //   {
-      //     from: paths.appDll,
-      //     to: paths.appBuild,
-      //     ignore: ['.*']
-      //   }
-      // ]),
-
-      // dll optimization
-      // new DllReferencePlugin({
-      //   manifest: require('./dll/ueDll.manifest.json')
-      // }),
-
       // html entry plugin
       new HtmlWebpackPlugin({
         title: 'Luckyue',
@@ -548,10 +536,23 @@ module.exports = webpackEnv => {
         inject: true
       }),
 
+      // dll optimization
+      ...Object.keys(library).map(name => {
+        return new DllReferencePlugin({
+          manifest: require(`./dll/${name}.manifest.json`)
+        });
+      }),
+
       // inject dll to template
-      // new AddAssetHtmlPlugin({
-      //   filepath: path.resolve(__dirname, './dll/*.dll.js')
-      // }),
+      new AddAssetHtmlPlugin(
+        Object.keys(library).map(name => {
+          return {
+            filepath: require.resolve(path.resolve(`build/dll/${name}.${lib_version}.dll.js`)),
+            outputPath: 'static/dll',
+            publicPath: './static/dll'
+          };
+        })
+      ),
 
       // compile info plugin
       isEnvDevelopment &&
