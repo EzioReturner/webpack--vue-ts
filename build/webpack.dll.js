@@ -1,11 +1,10 @@
 const webpack = require('webpack');
+const { DllPlugin } = webpack;
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DllPlugin } = webpack;
 const TerserPlugin = require('terser-webpack-plugin');
-const { library, libVersion } = require('../package.json');
 const paths = require('./paths');
-
+const { library, libVersion } = require('../package.json');
 const lib_version = libVersion.replace(/\./g, '_');
 
 module.exports = {

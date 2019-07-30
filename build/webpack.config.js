@@ -45,6 +45,9 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 const IsAnalyze = process.argv.pop().indexOf('analyze') > -1;
 
+const { original } = JSON.parse(process.env.npm_config_argv);
+const IsUseDll = original.pop().indexOf('useDll') > -1;
+
 //拼接路径
 function resolve(track) {
   return path.join(__dirname, '..', track);
@@ -115,14 +118,15 @@ module.exports = webpackEnv => {
     }
     return loaders;
   };
-  return {
+
+  const config = {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     entry: resolve('./client/main.js'),
     resolve: {
       // import hello from './hello'  （!hello.js? -> !hello.vue? -> !hello.json）
       extensions: ['.ts', '.js', '.vue', '.tsx', '.json'],
       alias: {
-        // vue$: isEnvDevelopment ? 'vue/dist/vue.esm.js' : 'vue/dist/vue.runtime.esm.js',
+        vue$: isEnvDevelopment ? 'vue/dist/vue.esm.js' : 'vue/dist/vue.runtime.esm.js',
         '@': resolve('./client'),
         '@components': resolve('./client/components'),
         '@styles': resolve('./client/styles'),
@@ -133,14 +137,6 @@ module.exports = webpackEnv => {
         '@model': resolve('./client/model')
       }
     },
-    // externals: {
-    //   vue$: 'vue/dist/vue.esm.js',
-    //   'vue-router': 'vue-router',
-    //   vuex: 'vuex',
-    //   'ant-design-vue': 'ant-design-vue',
-    //   axios: 'axios',
-    //   lodash: 'lodash'
-    // },
     output: {
       publicPath: './',
       path: paths.appBuildDist,
@@ -536,24 +532,6 @@ module.exports = webpackEnv => {
         inject: true
       }),
 
-      // dll optimization
-      ...Object.keys(library).map(name => {
-        return new DllReferencePlugin({
-          manifest: require(`./dll/${name}.manifest.json`)
-        });
-      }),
-
-      // inject dll to template
-      new AddAssetHtmlPlugin(
-        Object.keys(library).map(name => {
-          return {
-            filepath: require.resolve(path.resolve(`build/dll/${name}.${lib_version}.dll.js`)),
-            outputPath: 'static/dll',
-            publicPath: './static/dll'
-          };
-        })
-      ),
-
       // compile info plugin
       isEnvDevelopment &&
         new FriendlyErrorsPlugin({
@@ -599,4 +577,22 @@ module.exports = webpackEnv => {
       //   }),
     ].filter(Boolean)
   };
+  IsUseDll &&
+    config.plugins.push(
+      ...Object.keys(library).map(name => {
+        return new DllReferencePlugin({
+          manifest: require(`./dll/${name}.manifest.json`)
+        });
+      }),
+      new AddAssetHtmlPlugin(
+        Object.keys(library).map(name => {
+          return {
+            filepath: require.resolve(path.resolve(`build/dll/${name}.${lib_version}.dll.js`)),
+            outputPath: 'static/dll',
+            publicPath: './static/dll'
+          };
+        })
+      )
+    );
+  return config;
 };
