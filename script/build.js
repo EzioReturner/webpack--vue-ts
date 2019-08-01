@@ -21,7 +21,7 @@ const rmFile = path.resolve(__dirname, '../build/dist');
 const spinner = ora({ color: 'green', text: 'building for production...' });
 // get process arguments
 const { original } = JSON.parse(process.env.npm_config_argv);
-const IsUseDll = original.includes('--useDll') > -1;
+const IsUseDll = original.includes('--useDll');
 // get library files name & version
 const { library, libVersion } = require('../package.json');
 const lib_version = libVersion.replace(/\./g, '_');

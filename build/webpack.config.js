@@ -43,10 +43,10 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const PORT = parseInt(process.env.PORT, 10) || 9528;
 const HOST = process.env.HOST || '0.0.0.0';
 
-const IsAnalyze = process.argv.pop().indexOf('analyze') > -1;
+const IsAnalyze = process.argv.pop().includes('analyze');
 
 const { original } = JSON.parse(process.env.npm_config_argv);
-const IsUseDll = original.pop().indexOf('useDll') > -1;
+const IsUseDll = original.pop().includes('useDll');
 
 //拼接路径
 function resolve(track) {
