@@ -128,21 +128,20 @@
   },
   "libVersion": "1.0.0",
   "library": {
-    "vue$": [
-      "vue/dist/vue.esm.js"
-    ],
     "vuelib": [
+      "vue/dist/vue.esm.js",
       "vue-router",
+      "vuex-router-sync",
       "vuex"
     ],
     "ant": [
       "ant-design-vue"
     ],
-    "axios": [
-      "axios"
-    ],
-    "lodash": [
-      "lodash"
+    "tools": [
+      "axios",
+      "lodash",
+      "moment",
+      "nprogress"
     ]
   }
 }
