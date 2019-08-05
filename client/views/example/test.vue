@@ -1,9 +1,9 @@
 <template>
-  <div>三级菜单</div>
+  <div>123123!</div>
 </template>
-
 <script>
 export default {
-  name: 'third'
+  name: 'test'
 };
 </script>
+<style></style>

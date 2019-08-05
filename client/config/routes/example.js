@@ -6,8 +6,9 @@ import RouterBus from '@components/Router/RouterBus.vue';
 
 import {
   EXAMPLE_INDEX,
-  EXAMPLE_PAGE,
-  EXAMPLE_BREADCRUMB,
+  EXAMPLE_USEJS,
+  EXAMPLE_USETS,
+  EXAMPLE_USETSX,
   EXAMPLE_THIRD_INDEX,
   EXAMPLE_THIRD_TEST,
   EXAMPLE_HIDEPAGE
@@ -17,25 +18,31 @@ export default {
   name: EXAMPLE_INDEX,
   path: 'example',
   component: RouterBus,
-  redirect: '/example/page',
+  redirect: '/example/home',
   icon: 'desktop',
   children: [
     {
-      name: EXAMPLE_PAGE,
-      path: 'page',
+      name: EXAMPLE_USEJS,
+      path: 'use js',
       icon: 'cloud',
-      component: () => import(/* webpackChunkName: "page" */ '@views/example/page.vue')
+      component: () => import(/* webpackChunkName: "page" */ '@views/example/home.vue')
     },
     {
-      name: EXAMPLE_BREADCRUMB,
-      path: 'breadcrumb',
+      name: EXAMPLE_USETS,
+      path: 'use ts',
       icon: 'smile',
-      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/breadcrumb.vue')
+      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/ts.vue')
+    },
+    {
+      name: EXAMPLE_USETSX,
+      path: 'use tsx',
+      icon: 'smile',
+      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/tsx.vue')
     },
     {
       name: EXAMPLE_HIDEPAGE,
       path: 'hidePage',
-      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/breadcrumb.vue'),
+      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/tsx.vue'),
       meta: {
         hiddenMenu: true
       }
