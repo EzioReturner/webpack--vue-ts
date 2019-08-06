@@ -22,8 +22,8 @@
 1. 下载或克隆项目源码
 
 ```bash
-git clone http://git.luckincoffee.com/front/luckyue.git
-cd luckyue
+git clone https://github.com/EzioReturner/webpack-vue-typescript-starter.git wvts
+cd wvts
 ```
 
 2. yarn 或者 npm 安装相关包文件
