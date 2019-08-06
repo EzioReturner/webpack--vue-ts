@@ -9,6 +9,7 @@ import {
   EXAMPLE_USEJS,
   EXAMPLE_USETS,
   EXAMPLE_USETSX,
+  EXAMPLE_VUEXTS,
   EXAMPLE_THIRD_INDEX,
   EXAMPLE_THIRD_TEST,
   EXAMPLE_HIDEPAGE
@@ -23,21 +24,27 @@ export default {
   children: [
     {
       name: EXAMPLE_USEJS,
-      path: 'use js',
+      path: 'useJs',
       icon: 'cloud',
       component: () => import(/* webpackChunkName: "page" */ '@views/example/home.vue')
     },
     {
       name: EXAMPLE_USETS,
-      path: 'use ts',
+      path: 'useTs',
       icon: 'smile',
       component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/ts.vue')
     },
     {
       name: EXAMPLE_USETSX,
-      path: 'use tsx',
+      path: 'useTsx',
       icon: 'smile',
       component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/tsx.vue')
+    },
+    {
+      name: EXAMPLE_VUEXTS,
+      path: 'vuexTs',
+      icon: 'smile',
+      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/vuex.vue')
     },
     {
       name: EXAMPLE_HIDEPAGE,
