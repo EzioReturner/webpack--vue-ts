@@ -32,24 +32,24 @@ export default {
       name: EXAMPLE_USETS,
       path: 'useTs',
       icon: 'smile',
-      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/ts.vue')
+      component: () => import(/* webpackChunkName: "ts-example" */ '@views/example/ts.vue')
     },
     {
       name: EXAMPLE_USETSX,
       path: 'useTsx',
       icon: 'smile',
-      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/tsx.vue')
+      component: () => import(/* webpackChunkName: "tsx-example" */ '@views/example/tsx.vue')
     },
     {
       name: EXAMPLE_VUEXTS,
       path: 'vuexTs',
       icon: 'smile',
-      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/vuex.vue')
+      component: () => import(/* webpackChunkName: "vuex-example" */ '@views/example/vuex.vue')
     },
     {
       name: EXAMPLE_HIDEPAGE,
       path: 'hidePage',
-      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/tsx.vue'),
+      component: () => import(/* webpackChunkName: "hide" */ '@views/example/tsx.vue'),
       meta: {
         hiddenMenu: true
       }
@@ -64,7 +64,7 @@ export default {
           name: EXAMPLE_THIRD_TEST,
           path: 'test',
           icon: 'tag',
-          component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/example/test.vue')
+          component: () => import(/* webpackChunkName: "test" */ '@views/example/test.vue')
         }
       ]
     }
