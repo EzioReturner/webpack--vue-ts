@@ -133,7 +133,7 @@ module.exports = webpackEnv => {
         '@utils': resolve('./client/utils'),
         '@views': resolve('./client/views'),
         '@constants': resolve('./client/constants'),
-        '@config': resolve('./client/config'),
+        '@config': resolve('./config'),
         '@model': resolve('./client/model')
       }
     },

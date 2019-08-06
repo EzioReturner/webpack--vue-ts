@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import Collapsed from '../Collapse/index.vue';
-import style from './index.module.scss';
+import styles from './index.module.scss';
 import { Action, namespace, Getter, State } from 'vuex-class';
 // @ts-ignore
 import { CollapseConfig } from '@model/components/layout.model';
@@ -74,27 +74,27 @@ export default class LuckyueBreadcrumb extends Vue {
       const isDisplay = checkDisplay(path);
 
       return (
-        <li class={[style.crumbUnit, isDisplay && style.displayed]}>
-          <span class={style.crumbName} onClick={() => handleClickCrumb(_crumb)}>
+        <li class={[styles.crumbUnit, isDisplay && styles.displayed]}>
+          <span class={styles.crumbName} onClick={() => handleClickCrumb(_crumb)}>
             {name}
           </span>
           <span
-            class={style.closeIconContainer}
+            class={styles.closeIconContainer}
             onClick={(e: any) => {
               e.stopPropagation();
               handleCloseCrumb(_crumb);
             }}
           >
-            <a-icon type="close" class={style.closeIcon} />
+            <a-icon type="close" class={styles.closeIcon} />
           </span>
         </li>
       );
     });
 
     return (
-      <div class={style.breadcrumb}>
+      <div class={styles.breadcrumb}>
         {position === 'breadcrumb' && <Collapsed />}
-        <ul class={style.crumbList}>{CrumbRender}</ul>
+        <ul class={styles.crumbList}>{CrumbRender}</ul>
       </div>
     );
   }

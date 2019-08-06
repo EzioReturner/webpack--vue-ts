@@ -9,3 +9,9 @@
     transform: rotate(180deg);
   }
 }
+
+.collapsedContainer {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}

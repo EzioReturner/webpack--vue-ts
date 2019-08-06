@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { constantRouterMap } from '@/config/routes';
+import { constantRouterMap } from '@/routes';
 import NProgress from 'nprogress';
 
 const router = new VueRouter({
