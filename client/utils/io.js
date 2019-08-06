@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { notification } from 'antd';
+import { Notification } from 'ant-design-vue';
 
 class Request {
   instance;
@@ -28,7 +28,7 @@ class Request {
 
   // 错误notify
   notify(message) {
-    notification.error({
+    Notification.error({
       message: '请求错误',
       description: `${message ||
         'This is the content of the notification. This is the content of the notification. This is the content of the notification.'}`

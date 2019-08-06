@@ -13,7 +13,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpackConfigFactory = require('../build/webpack.config');
 const createDevServerConfig = require('../build/webpackDevServer.config');
 
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 9527;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 9528;
 const HOST = process.env.HOST || '0.0.0.0';
 
 if (process.env.HOST) {

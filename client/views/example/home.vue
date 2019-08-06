@@ -22,6 +22,7 @@
 import styles from './index.module.scss';
 import homestyle from './home.module.css';
 import Jsx from './jsx';
+import Io from '@utils/io';
 
 export default {
   name: 'home',

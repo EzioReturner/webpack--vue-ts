@@ -6,7 +6,7 @@ import AntdVueInit from './utils/antd-vue-init';
 AntdVueInit();
 
 // 注册highlight
-import HljsInit from './utils/highlight-init';
+import './utils/highlight-init';
 
 // // 注册directives
 import Directives from './utils/directives-init';
