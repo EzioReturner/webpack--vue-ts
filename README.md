@@ -1,8 +1,10 @@
 <h1 align="center">Webpack-Vue-Typescript</h1>
 
-<div align="center">
+<h2 align="center">
    A solution of vue spa-cli with typescript
-</div>
+</h2>
+
+<h3 align="center">如果你不想用vue-cli，那就试试它吧~</h3>
 
 ## dependencies &nbsp; 依赖模块
 

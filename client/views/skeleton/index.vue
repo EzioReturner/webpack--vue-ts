@@ -2,7 +2,7 @@
   <BasicLayout :editConfig="editConfig">
     <template #nav-siteTitle>
       <a :class="style.controlBut" target="_blank" rel="noopener noreferrer">
-        <span :class="style.title">Luckyue</span>
+        <span :class="style.title">WVTS</span>
       </a>
     </template>
     <template #header-actions>

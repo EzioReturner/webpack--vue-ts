@@ -1,5 +1,5 @@
 <template>
-  <div>123123!</div>
+  <div style="margin-top:12px;">test display!</div>
 </template>
 <script>
 export default {
