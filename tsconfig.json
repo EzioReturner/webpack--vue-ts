@@ -20,7 +20,7 @@
       "@utils/*": ["./client/utils/*"],
       "@views/*": ["./client/views/*"],
       "@constants/*": ["./client/constants/*"],
-      "@config/*": ["./client/config/*"],
+      "@config/*": ["./config/*"],
       "@model/*": ["./client/model/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]

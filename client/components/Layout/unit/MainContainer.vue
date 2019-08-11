@@ -1,6 +1,6 @@
 <script lang="tsx">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import style from './MainContainer.module.scss';
+import styles from './MainContainer.module.scss';
 // @ts-ignore
 import Breadcrumb from '@components/Breadcrumb';
 
@@ -10,9 +10,9 @@ export default class LuckyueMainContainer extends Vue {
   render(h: any) {
     const { editStyle } = this;
     return (
-      <section style={editStyle} class={style.mainContainer}>
+      <section style={editStyle} class={styles.mainContainer}>
         <Breadcrumb />
-        <main class={style.viewBody}>
+        <main class={styles.viewBody}>
           <router-view />
         </main>
       </section>

@@ -1,8 +1,10 @@
 <h1 align="center">Webpack-Vue-Typescript</h1>
 
 <div align="center">
-  A solution of spa vue-cli with typescript
+  A front-end solution web applications.
 </div>
+
+<h3 align="center">如果你不想用vue-cli，那就试试它吧~</h3>
 
 ## dependencies &nbsp; 依赖模块
 
@@ -20,8 +22,8 @@
 1. 下载或克隆项目源码
 
 ```bash
-git clone http://git.luckincoffee.com/front/luckyue.git
-cd luckyue
+git clone https://github.com/EzioReturner/webpack-vue-typescript-starter.git wvts
+cd wvts
 ```
 
 2. yarn 或者 npm 安装相关包文件

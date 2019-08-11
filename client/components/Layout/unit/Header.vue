@@ -1,7 +1,7 @@
 <script lang="tsx">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Collapsed from '../../Collapse/index.vue';
-import style from './Header.module.scss';
+import styles from './Header.module.scss';
 // @ts-ignore
 import { CollapseConfig } from '@model/components/layout.model';
 import { Action, namespace, State } from 'vuex-class';
@@ -27,10 +27,10 @@ export default class LuckyueHeader extends Vue {
     const { position } = this.collapseConfig;
 
     return (
-      <header class={style.header} style={editStyle}>
-        {SiteTitle && <div class={style.titlePlace}>{SiteTitle}</div>}
+      <header class={styles.header} style={editStyle}>
+        {SiteTitle && <div class={styles.titlePlace}>{SiteTitle}</div>}
         {position === 'header' && <Collapsed />}
-        {Actions && <div class={style.actionPlace}>{Actions}</div>}
+        {Actions && <div class={styles.actionPlace}>{Actions}</div>}
       </header>
     );
   }

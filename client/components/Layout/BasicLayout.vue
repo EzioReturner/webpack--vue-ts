@@ -8,6 +8,24 @@ import style from './BasicLayout.module.scss';
 // @ts-ignore
 import { SET_COLLAPSE_CONFIG_FN } from '@constants/index';
 
+/**
+ * BasicLayout provied 4 slots, as below
+ * @param {nav-siteTitle} :nav-title slot
+ * @param {nav-siderMenu} :nav-sider-menu slot & if you don`t provide this slots luckyue will render route menu default
+ * @param {header-siteTitle} :header-title, position in left side
+ * @param {header-actions} :header-actions, positon in right side was used to render user actions like logout and more
+ *
+ * props @param {editConfig} :Contains the following parameters
+ * @headerMode provide two mode @split || @inline
+ * @headerStyle rewrite the whole header component style
+ * @navStyle rewrite the whole nav component style
+ * @mainStyle rewrite the whole main component style
+ * @collapse this property provide these parametes as below
+ *    @param {style} :rewrite the whole collapse component style
+ *    @param {icon} :rewrite the collapse`s icon reference antd-icon
+ *    @param {position} :decide the collapse component to place in where @header || @breadcrumb
+ */
+
 @Component
 export default class BasicLayout extends Vue {
   @Prop(Object) readonly editConfig: any;
@@ -109,14 +127,3 @@ export default class BasicLayout extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-@keyframes nprogress-spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-</style>

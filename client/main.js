@@ -5,6 +5,12 @@ import './styles/main.scss';
 import AntdVueInit from './utils/antd-vue-init';
 AntdVueInit();
 
+// 注册highlight
+import './utils/highlight-init';
+
+// // 注册directives
+// import Directives from './utils/directives-init';
+
 Vue.config.productionTip = false;
 
 // 注册 router 钩子

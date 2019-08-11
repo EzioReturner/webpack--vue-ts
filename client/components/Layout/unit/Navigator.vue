@@ -1,8 +1,8 @@
 <script lang="tsx">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import style from './Navigator.module.scss';
+import styles from './Navigator.module.scss';
 // @ts-ignore
-import { constantRouterMap } from '@config/routes';
+import { constantRouterMap } from '@/routes';
 //@ts-ignore
 import { MenuModel } from '@model/components/layout.model';
 
@@ -91,7 +91,7 @@ export default class LuckyueNavigator extends Vue {
           <a-sub-menu key={path}>
             <template slot="title">
               {icon && <a-icon type={icon} />}
-              <span class={style.menuTitle}>{name}</span>
+              <span class={styles.menuTitle}>{name}</span>
             </template>
             {getNavMenu(children, _path)}
           </a-sub-menu>
@@ -100,7 +100,7 @@ export default class LuckyueNavigator extends Vue {
       return (
         <a-menu-item key={_path} onClick={() => handleClickMenuItem(_path)}>
           {icon && <a-icon type={icon} />}
-          <span class={style.menuTitle}>{name}</span>
+          <span class={styles.menuTitle}>{name}</span>
         </a-menu-item>
       );
     };
@@ -113,8 +113,8 @@ export default class LuckyueNavigator extends Vue {
       : {
           openKeys: openMenu
         };
-    const NavMenu = $scopedSlots.NavMenu ? (
-      (props => $scopedSlots.NavMenu(props))()
+    const NavMenu = $scopedSlots.siderMenu ? (
+      (props => $scopedSlots.siderMenu(props))()
     ) : (
       <a-menu
         inlineCollapsed={_collapsed}
@@ -129,9 +129,9 @@ export default class LuckyueNavigator extends Vue {
     );
 
     return (
-      <aside class={[style.navigator, _collapsed && style.collapsed]} style={editStyle}>
+      <aside class={[styles.navigator, _collapsed && styles.collapsed]} style={editStyle}>
         {SiteTitle}
-        <div class={style.menuContainer}>{NavMenu}</div>
+        <div class={styles.menuContainer}>{NavMenu}</div>
       </aside>
     );
   }
