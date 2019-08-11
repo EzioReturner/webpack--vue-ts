@@ -1,0 +1,17 @@
+.collapsedIcon {
+  font-size: 22px;
+  margin-left: 24px;
+  transition: transform 0.3s;
+  padding: 0;
+  color: #409eff;
+  cursor: pointer;
+  &.collapsed {
+    transform: rotate(180deg);
+  }
+}
+
+.collapsedContainer {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}

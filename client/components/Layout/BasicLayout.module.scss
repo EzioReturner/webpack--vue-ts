@@ -1,0 +1,27 @@
+.splitLayout {
+  display: flex;
+  flex-flow: row;
+}
+
+.inlineLayout {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s;
+  &.collapsed {
+    left: 80px;
+  }
+  &.isMobile {
+    left: 0;
+  }
+  &.inline {
+    flex-direction: row;
+  }
+}
