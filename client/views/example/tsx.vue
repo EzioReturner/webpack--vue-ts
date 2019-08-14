@@ -40,14 +40,14 @@ export default Tsx;
       <div>
         <h2 class={styles.colorful}>vue page use tsx</h2>
         <h3 class={styles.title} style="margin-top:20px;">
-          view
+          # view
         </h3>
         <div class={styles.view}>
           <div class={styles.colorful}>tttttssssssxxxxxx</div>
           {Test1}
         </div>
         <h3 class={styles.title} style="margin-top:20px;margin-bottom:0;">
-          script
+          # script
         </h3>
         <pre v-hljs>
           <code>{templateCode}</code>

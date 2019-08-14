@@ -54,7 +54,7 @@ export default {
       <div>
         <h2 class={styles.colorful}>vuex with typescript</h2>
         <h3 class={styles.title} style="margin-top:20px;margin-bottom:0;">
-          script
+          # script
         </h3>
         <pre v-hljs>
           <code>{templateCode}</code>
