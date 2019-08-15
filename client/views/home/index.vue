@@ -1,5 +1,5 @@
 <template>
-  <div>welcome to luckyue!</div>
+  <div style="font-size:30px;">welcome to WVTS!</div>
 </template>
 
 <script lang="ts">

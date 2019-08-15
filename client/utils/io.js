@@ -19,14 +19,6 @@ class Request {
         Promise.reject(error);
       }
     );
-    this.instance.interceptors.response.use(
-      response => {
-        return response;
-      },
-      error => {
-        return Promise.reject(error.response);
-      }
-    );
   }
 
   // 设置自定义头部
@@ -35,17 +27,16 @@ class Request {
   };
 
   // 错误notify
-  notify(message) {
+  notify(description) {
     Notification.error({
-      message: '请求错误',
-      description: `${message || '接口异常'}`
+      description: description,
+      message: '接口异常'
     });
   }
 
   // 错误处理
   handleError = error => {
     const { message, status } = error;
-
     switch (status) {
       case 401:
         break;
@@ -60,7 +51,7 @@ class Request {
     return Promise.reject(error);
   };
 
-  sendRequest(method, path, data = {}) {
+  sendRequest(method, data) {
     let { params, options = {} } = data;
     return this.instance[method](path, params, options).catch(this.handleError);
   }
@@ -70,8 +61,7 @@ class Request {
   }
 
   post(path, data) {
-    // const _path = path + '?_csrf=' + window.pageConfig._csrf;
-    return this.sendRequest('post', _path, data);
+    return this.sendRequest('post', path, data);
   }
 
   put(path, data) {
@@ -86,6 +76,5 @@ class Request {
     return this.sendRequest('delete', path, data);
   }
 }
-const request = new Request();
 
-export default request;
+export default new Request();
