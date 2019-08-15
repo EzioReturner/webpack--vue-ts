@@ -52,9 +52,11 @@ export default {
 
     return (
       <div>
-        <h2># Vuex with typescript #</h2>
-        <h3 class={styles.title} style="margin-top:20px;margin-bottom:0;">
-          · script
+        <h2>
+          <span class={styles.colorful}>&</span> Vuex with typescript{' '}
+        </h2>
+        <h3 class={styles.title} style="margin-top:20px;">
+          <span class={styles.colorful}>></span> script
         </h3>
         <pre v-hljs>
           <code>{templateCode}</code>

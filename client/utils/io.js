@@ -5,7 +5,9 @@ class Request {
   instance;
 
   constructor() {
-    this.instance = axios.create();
+    this.instance = axios.create({
+      withCredentials: true
+    });
     this.initTnterceptors();
   }
 
@@ -51,7 +53,7 @@ class Request {
     return Promise.reject(error);
   };
 
-  sendRequest(method, data) {
+  sendRequest(method, path, data = {}) {
     let { params, options = {} } = data;
     return this.instance[method](path, params, options).catch(this.handleError);
   }

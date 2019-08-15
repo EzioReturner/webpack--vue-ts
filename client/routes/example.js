@@ -12,7 +12,8 @@ import {
   EXAMPLE_VUEXTS,
   EXAMPLE_THIRD_INDEX,
   EXAMPLE_THIRD_TEST,
-  EXAMPLE_HIDEPAGE
+  EXAMPLE_HIDEPAGE,
+  EXAMPLE_REQUEST_API
 } from '@constants/routes';
 
 export default {
@@ -37,13 +38,13 @@ export default {
     {
       name: EXAMPLE_USETSX,
       path: 'useTsx',
-      icon: 'smile',
+      icon: 'flag',
       component: () => import(/* webpackChunkName: "tsx-example" */ '@views/example/tsx.vue')
     },
     {
       name: EXAMPLE_VUEXTS,
       path: 'vuexTs',
-      icon: 'smile',
+      icon: 'fire',
       component: () => import(/* webpackChunkName: "vuex-example" */ '@views/example/vuex.vue')
     },
     {
@@ -53,6 +54,12 @@ export default {
       meta: {
         hiddenMenu: true
       }
+    },
+    {
+      name: EXAMPLE_REQUEST_API,
+      path: 'requestApi',
+      icon: 'rocket',
+      component: () => import(/* webpackChunkName: "requestApi" */ '@views/example/testApi')
     },
     {
       name: EXAMPLE_THIRD_INDEX,

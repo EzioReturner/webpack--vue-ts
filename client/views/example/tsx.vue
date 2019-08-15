@@ -38,16 +38,18 @@ export default Tsx;
 
     return (
       <div>
-        <h2># Vue page use tsx #</h2>
+        <h2>
+          <span class={styles.colorful}>&</span> Vue page use tsx{' '}
+        </h2>
         <h3 class={styles.title} style="margin-top:20px;">
-          · view
+          <span class={styles.colorful}>></span> view
         </h3>
         <div class={styles.view}>
           <div class={styles.colorful}>tttttssssssxxxxxx</div>
           {Test1}
         </div>
         <h3 class={styles.title} style="margin-top:20px;margin-bottom:0;">
-          · script
+          <span class={styles.colorful}>></span> script
         </h3>
         <pre v-hljs>
           <code>{templateCode}</code>

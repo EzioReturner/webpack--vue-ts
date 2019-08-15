@@ -1,16 +1,20 @@
 <template>
   <div>
-    <h2># Vue page use typescript #</h2>
-    <h3 :class="styles.title" style="margin-top:20px;">· view</h3>
+    <h2><span :class="styles.colorful">&</span> Vue page use typescript</h2>
+    <h3 :class="styles.title" style="margin-top:20px;">
+      <span :class="styles.colorful">></span> view
+    </h3>
     <div :class="styles.view">
       <span :class="styles.colorful">typescript</span>
       <Test />
     </div>
-    <h3 :class="styles.title" style="margin-top:20px;">· Template</h3>
+    <h3 :class="styles.title" style="margin-top:20px;">
+      <span :class="styles.colorful">></span> Template
+    </h3>
     <pre v-hljs>
       <code>{{templateCode}}</code>
     </pre>
-    <h3 :class="styles.title">· script</h3>
+    <h3 :class="styles.title"><span :class="styles.colorful">></span> script</h3>
     <pre v-hljs>
       <code>{{scriptCode}}</code>
     </pre>

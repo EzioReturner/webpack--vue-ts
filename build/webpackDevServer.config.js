@@ -12,9 +12,9 @@ module.exports = function(proxy) {
     contentBase: paths.appPublic,
     watchContentBase: true,
     hot: true,
-    publicPath: '/',
+    // publicPath: '/',
     quiet: true,
-    https: protocol === 'https',
+    // https: protocol === 'https',
     host,
     open: false,
     overlay: {
@@ -22,8 +22,18 @@ module.exports = function(proxy) {
       warnings: false
     },
     inline: true,
-    historyApiFallback: {
-      disableDotRule: true
+    // historyApiFallback: {
+    //   disableDotRule: true
+    // },
+    proxy: {
+      '/ezioMusic': {
+        target: 'https://eziocloudmusicapi.leanapp.cn/',
+        changeOrigin: true,
+        secure: true,
+        pathRewrite: {
+          '/ezioMusic': ''
+        }
+      }
     }
   };
 };
