@@ -1,0 +1,37 @@
+.colorful {
+  color: #29d;
+}
+
+.title {
+  margin: 0;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  padding-right: 5px;
+  cursor: pointer;
+  vertical-align: bottom;
+  line-height: 20px;
+  &:hover {
+    border-bottom: 1px solid #29d;
+    // color: #29d;
+  }
+}
+
+.description {
+  border-left: 3px solid #29d;
+  padding-left: 12px;
+  margin: 16px 0;
+}
+
+.link {
+  vertical-align: text-top;
+  line-height: 21px;
+  margin-left: 12px;
+}
+
+.view {
+  background: #fafafa;
+  padding: 8px;
+  margin-bottom: 40px;
+}
