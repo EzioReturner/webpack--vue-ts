@@ -4,6 +4,7 @@
  * 举个栗子: const view = () => import('../view.vue');
  */
 import example from './example';
+import componentsExample from './componentsExample';
 
 import { SKELETON, HOME_VIEW } from '@constants/routes';
 
@@ -25,6 +26,7 @@ export const constantRouterMap = [
         component: () => import(/* webpackChunkName: "basicLayout" */ '@views/home/index.vue')
       },
       example,
+      componentsExample,
       {
         path: '404',
         name: '404NotFound',

@@ -20,7 +20,7 @@ export default {
   name: EXAMPLE_INDEX,
   path: 'example',
   component: RouterBus,
-  redirect: '/example/home',
+  redirect: '/example/useJs',
   icon: 'desktop',
   children: [
     {

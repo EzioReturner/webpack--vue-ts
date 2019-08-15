@@ -48,7 +48,7 @@ export default Tsx;
           <div class={styles.colorful}>tttttssssssxxxxxx</div>
           {Test1}
         </div>
-        <h3 class={styles.title} style="margin-top:20px;margin-bottom:0;">
+        <h3 class={styles.title} style="margin-top:20px;">
           <span class={styles.colorful}>></span> script
         </h3>
         <pre v-hljs>

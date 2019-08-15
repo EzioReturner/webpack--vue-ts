@@ -11,7 +11,7 @@ import { SET_COLLAPSE_CONFIG_FN } from '@constants/index';
 /**
  * BasicLayout provied 4 slots, as below
  * @param {nav-siteTitle} :nav-title slot
- * @param {nav-siderMenu} :nav-sider-menu slot & if you don`t provide this slots luckyue will render route menu default
+ * @param {nav-siderMenu} :nav-sider-menu slot & luckyue will render route menu default if you don`t provide this slots
  * @param {header-siteTitle} :header-title, position in left side
  * @param {header-actions} :header-actions, positon in right side was used to render user actions like logout and more
  *
