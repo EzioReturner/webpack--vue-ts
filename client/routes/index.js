@@ -3,8 +3,8 @@
  * 如果你需要使用路由懒加载的功能，可以使用动态import
  * 举个栗子: const view = () => import('../view.vue');
  */
-import example from './example';
-import componentsExample from './componentsExample';
+import introduction from './introduction';
+import advance from './advance';
 
 import { SKELETON, HOME_VIEW } from '@constants/routes';
 
@@ -25,8 +25,8 @@ export const constantRouterMap = [
         icon: 'fund',
         component: () => import(/* webpackChunkName: "basicLayout" */ '@views/home/index.vue')
       },
-      example,
-      componentsExample,
+      introduction,
+      advance,
       {
         path: '404',
         name: '404NotFound',

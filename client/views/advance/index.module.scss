@@ -35,3 +35,14 @@
   padding: 8px;
   margin-bottom: 40px;
 }
+
+.wrapStyle {
+  height: 20px;
+  .drawerTitle {
+    display: flex;
+    align-items: center;
+    i {
+      color: #52c41a;
+    }
+  }
+}
