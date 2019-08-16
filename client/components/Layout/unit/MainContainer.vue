@@ -10,11 +10,13 @@ export default class LuckyueMainContainer extends Vue {
   render(h: any) {
     const { editStyle } = this;
     return (
-      <section style={editStyle} class={styles.mainContainer}>
-        <Breadcrumb />
-        <main class={styles.viewBody} v-spin>
-          <router-view />
-        </main>
+      <section style={editStyle} class={styles.mainContainer} v-spin={false}>
+        <div>
+          <Breadcrumb />
+          <main class={styles.viewBody}>
+            <router-view />
+          </main>
+        </div>
       </section>
     );
   }

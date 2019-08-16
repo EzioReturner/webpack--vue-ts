@@ -116,12 +116,6 @@ export default {
         {IntroduceTitle}
         {_Script}
         {Code}
-        <div class={styles.blizzard}>
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
         <a-drawer
           placement="right"
           visible={visible}

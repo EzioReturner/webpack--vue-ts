@@ -59,7 +59,15 @@ class Request {
   }
 
   get(path, data) {
-    return this.sendRequest('get', path, data);
+    const { params } = data;
+    let _path = path;
+    if (params) {
+      _path += '?';
+      Object.keys(params).forEach(key => {
+        _path += `${key}=${params[key]}`;
+      });
+    }
+    return this.sendRequest('get', _path, data);
   }
 
   post(path, data) {
