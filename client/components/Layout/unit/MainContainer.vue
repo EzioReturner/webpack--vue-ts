@@ -12,7 +12,7 @@ export default class LuckyueMainContainer extends Vue {
     return (
       <section style={editStyle} class={styles.mainContainer}>
         <Breadcrumb />
-        <main class={styles.viewBody}>
+        <main class={styles.viewBody} v-spin>
           <router-view />
         </main>
       </section>

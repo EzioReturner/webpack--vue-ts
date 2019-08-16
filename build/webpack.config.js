@@ -301,8 +301,10 @@ module.exports = webpackEnv => {
                     {
                       sourceMap: isEnvProduction && shouldUseSourceMap,
                       importLoaders: 2,
-                      modules: true,
-                      localIdentName: '[name]_[local]_[hash:base64:5]'
+                      modules: {
+                        mode: 'local',
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                      }
                     },
                     'sass-loader'
                   )
@@ -325,7 +327,10 @@ module.exports = webpackEnv => {
                 {
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: true
+                  modules: {
+                    mode: 'local',
+                    localIdentName: '[name]__[local]--[hash:base64:5]'
+                  }
                 },
                 'sass-loader'
               )
@@ -365,7 +370,10 @@ module.exports = webpackEnv => {
                 {
                   importLoaders: 2,
                   sourceMap: isEnvProduction && shouldUseSourceMap,
-                  modules: true
+                  modules: {
+                    mode: 'local',
+                    localIdentName: '[name]__[local]--[hash:base64:5]'
+                  }
                 },
                 'less-loader'
               )
