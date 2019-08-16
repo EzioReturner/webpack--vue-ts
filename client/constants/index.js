@@ -13,3 +13,10 @@ export const SET_CRUMBS = 'SET_CRUMBS';
 export const SET_CRUMBS_FN = 'SET_CRUMBS_FN';
 export const DEL_CRUMB = 'DEL_CRUMB';
 export const DEL_CRUMB_FN = 'DEL_CRUMB_FN';
+export const GET_CRUMBS = 'GET_CRUMBS';
+/**
+ * 接口请求loading
+ */
+export const SET_LOADING = 'SET_LOADING';
+export const SET_LOADING_FN = 'SET_LOADING_FN';
+export const GET_LOADING = 'GET_LOADING';

@@ -9,7 +9,7 @@ AntdVueInit();
 import './utils/highlight-init';
 
 // // 注册directives
-import './utils/directives-init';
+import './directives';
 
 Vue.config.productionTip = false;
 

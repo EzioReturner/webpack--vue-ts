@@ -1,0 +1,3 @@
+import './spin';
+
+export default {};

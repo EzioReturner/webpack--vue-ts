@@ -92,12 +92,12 @@ export default {
           <h2 style="display: inline-block;">
             <span class={styles.colorful}>&</span> request api
           </h2>
-          <a class={styles.link} onClick={() => requestApi()}>
-            点我试一下~
-          </a>
         </div>
         <div class={styles.description}>
           WVTS提供了一份完整的前端IO方案，例如：我们现在请求一下接口数据
+          <a class={styles.link} onClick={() => requestApi()}>
+            点我试一下~
+          </a>
         </div>
       </div>
     );

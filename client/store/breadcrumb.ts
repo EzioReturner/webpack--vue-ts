@@ -1,5 +1,5 @@
 import { Commit, Module, ActionTree, MutationTree, GetterTree } from 'vuex';
-import { SET_CRUMBS, SET_CRUMBS_FN, DEL_CRUMB, DEL_CRUMB_FN } from '@constants/index';
+import { SET_CRUMBS, SET_CRUMBS_FN, DEL_CRUMB, DEL_CRUMB_FN, GET_CRUMBS } from '@constants/index';
 import { CrumbState, Crumbs } from '@model/store/breadcrumb.model';
 import { BaseState } from '@model/store/base.model';
 import Router from '@components/Router';
@@ -9,12 +9,10 @@ const state: CrumbState = {
 };
 
 const getters: GetterTree<CrumbState, BaseState> = {
-  getCrumbs(state): Crumbs[] {
+  [GET_CRUMBS](state): Crumbs[] {
     return state.crumbs;
   }
 };
-
-const removeCrumb = (params: Crumbs) => {};
 
 const mutations: MutationTree<CrumbState> = {
   /**

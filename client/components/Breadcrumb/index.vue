@@ -8,13 +8,13 @@ import { CollapseConfig } from '@model/components/layout.model';
 // @ts-ignore
 import { Crumbs } from '@model/store/breadcrumb.model';
 // @ts-ignore
-import { SET_CRUMBS_FN, DEL_CRUMB_FN } from '@constants/index';
+import { SET_CRUMBS_FN, DEL_CRUMB_FN, GET_CRUMBS } from '@constants/index';
 
 const crumbStore = namespace('breadcrumb');
 @Component
 export default class LuckyueBreadcrumb extends Vue {
   @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
-  @crumbStore.Getter('getCrumbs') crumbs: Crumbs[];
+  @crumbStore.Getter(GET_CRUMBS) crumbs: Crumbs[];
   @crumbStore.Action(SET_CRUMBS_FN) setCrumbsFN: Function;
   @crumbStore.Action(DEL_CRUMB_FN) delCrumbFN: Function;
 

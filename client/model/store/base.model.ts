@@ -1,6 +1,7 @@
 export interface BaseState {
   collapsed: boolean;
   collapseConfig: CollapsedConfig;
+  loading: boolean;
 }
 
 interface CollapsedConfig {
