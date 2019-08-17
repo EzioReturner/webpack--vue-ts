@@ -2,11 +2,7 @@ import Vue from 'vue';
 import './styles/main.scss';
 
 // 注册antd组件
-import AntdVueInit from './utils/antd-vue-init';
-AntdVueInit();
-
-// 注册highlight
-import './utils/highlight-init';
+import './utils/antd-vue-init';
 
 // // 注册directives
 import './directives';

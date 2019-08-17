@@ -1,10 +1,10 @@
-import Vue from 'vue';
 import { Icon } from 'ant-design-vue';
 import '@styles/spin.scss';
 
-Vue.use(Icon);
 const spinDirective = {};
 spinDirective.install = Vue => {
+  Vue.use(Icon);
+
   /**
    * 创建spinDom
    */
