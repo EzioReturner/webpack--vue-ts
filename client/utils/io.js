@@ -65,7 +65,7 @@ class Request {
 
   sendRequest(method, path, data = {}) {
     let { params, options = {} } = data;
-    Store.dispatch('SET_LOADING_FN', options.hideLoading !== true);
+    Store.dispatch('SET_LOADING_FN', options.noSpin !== true);
     return this.instance[method](path, params, options).catch(this.handleError);
   }
 

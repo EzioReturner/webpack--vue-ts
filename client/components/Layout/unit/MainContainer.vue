@@ -5,6 +5,7 @@ import { Action, namespace, Getter, State } from 'vuex-class';
 // @ts-ignore
 import Breadcrumb from '@components/Breadcrumb';
 import { GET_LOADING } from '@constants/index';
+import { setTimeout } from 'timers';
 @Component
 export default class LuckyueMainContainer extends Vue {
   @Prop(Object) readonly editStyle: any;
@@ -13,7 +14,7 @@ export default class LuckyueMainContainer extends Vue {
   render(h: any) {
     const { editStyle, loading } = this;
     return (
-      <section style={editStyle} class={styles.mainContainer} v-spin={loading} spinOptions={{}}>
+      <section style={editStyle} class={styles.mainContainer} v-spin={loading}>
         <div>
           <Breadcrumb />
           <main class={styles.viewBody}>
