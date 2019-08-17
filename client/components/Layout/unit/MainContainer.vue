@@ -13,8 +13,17 @@ export default class LuckyueMainContainer extends Vue {
 
   render(h: any) {
     const { editStyle, loading } = this;
+    const directives = [
+      {
+        name: 'spin',
+        value: loading,
+        modifiers: {
+          fullScreen: true
+        }
+      }
+    ];
     return (
-      <section style={editStyle} class={styles.mainContainer} v-spin={loading}>
+      <section style={editStyle} class={styles.mainContainer} {...{ directives }}>
         <div>
           <Breadcrumb />
           <main class={styles.viewBody}>

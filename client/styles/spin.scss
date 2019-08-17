@@ -11,7 +11,7 @@
   }
 }
 
-.spining-loading {
+.spining-mask {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,6 +22,11 @@
   align-items: center;
   z-index: 8;
   flex-direction: column;
+  background: rgba(255, 255, 255, 0.4);
+  transition: opacity 0.3s;
+  &.hidding {
+    opacity: 0;
+  }
   & > .spining-text {
     color: $primary-color;
   }

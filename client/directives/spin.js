@@ -12,17 +12,29 @@ spinDirective.install = Vue => {
     const spinLoading = document.createElement('div');
     spinLoading.setAttribute(
       'class',
-      `spining-loading ${spinClass || ''}`.replace(/(^\s*)|(\s*$)/, '')
+      `spining-mask ${spinClass || ''}`.replace(/(^\s*)|(\s*$)/g, '')
     );
     spinLoading.setTip = tip => {
       const tipDom = spinLoading.getElementsByClassName('spining-text')[0];
       tipDom.innerText = tip || '数据加载中...';
     };
 
+    spinLoading.hide = () => {
+      spinLoading.setAttribute('class', `${spinLoading.className} hidding`);
+    };
+
+    spinLoading.unhide = () => {
+      let className = spinLoading.className
+        .split(' ')
+        .filter(name => name !== 'hidding')
+        .join(' ');
+      spinLoading.setAttribute('class', `${className}`);
+    };
+
     const spinBody = document.createElement('div');
     spinBody.setAttribute(
       'class',
-      `spining-icon ${icon ? '' : 'blizzard'}`.replace(/(^\s*)|(\s*$)/, '')
+      `spining-icon ${icon ? '' : 'blizzard'}`.replace(/(^\s*)|(\s*$)/g, '')
     );
 
     const spinText = document.createElement('span');
@@ -63,34 +75,14 @@ spinDirective.install = Vue => {
   };
 
   /**
-   * 初始化容器
-   */
-  const initSpinContainer = el => {
-    const childNodes = el.childNodes;
-    if (childNodes.length > 1) {
-      throw Error('spin container must have only one child element');
-    }
-    const fcClass = childNodes[0].className;
-    const loadingClass = `${fcClass} spining-container`;
-    childNodes[0].setAttribute('class', loadingClass.replace(/(^\s*)|(\s*$)/, ''));
-    return childNodes[0];
-  };
-
-  /**
    * 移除loading
    */
-  const removeLoading = el => {
-    const [firstChild, container] = el.childNodes;
-    if (!container) {
-      return;
-    }
-    let className = container.className;
-    className = className
-      .split(' ')
-      .filter(name => name !== 'spining-blur')
-      .join(' ');
-    container.setAttribute('class', className);
-    el.removeChild(firstChild);
+  const removeLoading = (target, el) => {
+    el.mask.hide();
+    setTimeout(() => {
+      el.mask.unhide();
+      target.removeChild(el.mask);
+    }, 300);
   };
 
   /**
@@ -98,14 +90,17 @@ spinDirective.install = Vue => {
    */
   const toggleLoading = (el, binding) => {
     if (binding.value) {
+      const spinLoading = el.mask;
       Vue.nextTick(() => {
-        const firstChild = el.childNodes[0];
-        firstChild.setAttribute('class', `${firstChild.className} spining-blur`);
-        const spinLoading = el.mask;
-        el.insertBefore(spinLoading, firstChild);
+        if (binding.modifiers.fullScreen) {
+          document.body.appendChild(spinLoading);
+        } else {
+          el.appendChild(spinLoading);
+        }
       });
     } else {
-      removeLoading(el);
+      const target = binding.modifiers.fullScreen ? document.body : el;
+      removeLoading(target, el);
     }
   };
 
@@ -113,10 +108,13 @@ spinDirective.install = Vue => {
    * 注册spin
    */
   Vue.directive('spin', {
-    bind: (el, binding) => {
+    bind: (el, binding, VNode) => {
       const tip = el.getAttribute('spin-tip');
       const icon = el.getAttribute('spin-icon');
-      const iconStyle = el.getAttribute('spin-style');
+      const iconStyle =
+        el.getAttribute('spin-style') === '[object Object]'
+          ? VNode.data.attrs['spin-style']
+          : el.getAttribute('spin-style');
       const spinClass = el.getAttribute('spin-class');
       const options = {
         tip,
@@ -124,7 +122,7 @@ spinDirective.install = Vue => {
         iconStyle,
         spinClass
       };
-      initSpinContainer(el);
+
       const spinLoading = createSpinDom(options);
       el.mask = spinLoading;
       el.setAttribute('class', `${el.className} spining-nested`);
