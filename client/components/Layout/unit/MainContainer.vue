@@ -12,16 +12,8 @@ export default class LuckyueMainContainer extends Vue {
 
   render(h: any) {
     const { editStyle, loading } = this;
-
     return (
-      <section
-        style={editStyle}
-        class={styles.mainContainer}
-        v-spin={loading}
-        spinOptions={{
-          tip: '玩命加载中...'
-        }}
-      >
+      <section style={editStyle} class={styles.mainContainer} v-spin={loading} spinOptions={{}}>
         <div>
           <Breadcrumb />
           <main class={styles.viewBody}>

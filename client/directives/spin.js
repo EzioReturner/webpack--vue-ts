@@ -1,15 +1,23 @@
 import Vue from 'vue';
-import '@styles/loading.scss';
+import { Icon } from 'ant-design-vue';
+import '@styles/spin.scss';
 
 /**
  * 创建spinDom
  */
-const createSpinDom = ({ lodingClass, icon, tip }) => {
+Vue.use(Icon);
+const createSpinDom = ({ lodingClass, icon, tip, iconStyle }) => {
   const spinLoading = document.createElement('div');
-  spinLoading.setAttribute('class', `spining-loading ${lodingClass || ''}`);
+  spinLoading.setAttribute(
+    'class',
+    `spining-loading ${lodingClass || ''}`.replace(/(^\s*)|(\s*$)/, '')
+  );
 
   const spinBody = document.createElement('div');
-  spinBody.setAttribute('class', `spining-icon ${icon ? '' : 'blizzard'}`);
+  spinBody.setAttribute(
+    'class',
+    `spining-icon ${icon ? '' : 'blizzard'}`.replace(/(^\s*)|(\s*$)/, '')
+  );
 
   const spinText = document.createElement('span');
   spinText.setAttribute('class', 'spining-text');
@@ -23,6 +31,19 @@ const createSpinDom = ({ lodingClass, icon, tip }) => {
       const idom = document.createElement('i');
       spinBody.appendChild(idom);
     }
+  } else {
+    const styles = iconStyle
+      ? Object.keys(iconStyle).reduce((total, key) => {
+          const style = iconStyle[key];
+          total += `${key}:${style};`;
+          return total;
+        }, '')
+      : '';
+    const spinner = Vue.extend({
+      template: `<a-icon type="${icon}" style="${styles}"/>`
+    });
+    const loadingIcon = new spinner().$mount(document.createElement('div'));
+    spinBody.appendChild(loadingIcon.$el);
   }
 
   return spinLoading;
@@ -31,31 +52,15 @@ const createSpinDom = ({ lodingClass, icon, tip }) => {
 /**
  * 检查node数量
  */
-const checkNodeLength = el => {
+const initSpinContainer = el => {
   const childNodes = el.childNodes;
   if (childNodes.length > 1) {
     throw Error('spin container must have only one child element');
   }
+  const fcClass = childNodes[0].className;
+  const loadingClass = `${fcClass} spining-container`;
+  childNodes[0].setAttribute('class', loadingClass.replace(/(^\s*)|(\s*$)/, ''));
   return childNodes[0];
-};
-
-/**
- * 添加loading
- */
-const appendLoadingToNested = (el, VNode) => {
-  const {
-    data: { attrs }
-  } = VNode;
-
-  const options = attrs ? attrs.spinOptions : {};
-  const spinLoading = createSpinDom(options);
-
-  const firstChild = checkNodeLength(el);
-
-  const fcClass = firstChild.className;
-  const loadingClass = `${fcClass} spining-container spining-blur`;
-  firstChild.setAttribute('class', loadingClass);
-  el.insertBefore(spinLoading, firstChild);
 };
 
 /**
@@ -75,24 +80,36 @@ const removeLoading = el => {
   el.removeChild(firstChild);
 };
 
+const toggleLoading = (el, binding) => {
+  if (binding.value) {
+    Vue.nextTick(() => {
+      const firstChild = el.childNodes[0];
+      firstChild.setAttribute('class', `${firstChild.className} spining-blur`);
+      const spinLoading = el.mask;
+      el.insertBefore(spinLoading, firstChild);
+    });
+  } else {
+    removeLoading(el);
+  }
+};
+
 /**
  * 注册指令
  */
 Vue.directive('spin', {
   bind: (el, binding, VNode) => {
-    const elClass = el.className;
-    el.setAttribute('class', `${elClass} spining-nested`);
-    if (!binding.value) {
-      return;
-    }
-    appendLoadingToNested(el, VNode);
+    const {
+      data: { attrs }
+    } = VNode;
+    initSpinContainer(el);
+    const options = attrs ? attrs.spinOptions : {};
+    const spinLoading = createSpinDom(options);
+    el.mask = spinLoading;
+    el.setAttribute('class', `${el.className} spining-nested`);
+    binding.value && toggleLoading(el, binding);
   },
-  update: (el, binding, VNode) => {
-    if (binding.value) {
-      appendLoadingToNested(el, VNode);
-    } else {
-      removeLoading(el);
-    }
+  update: (el, binding) => {
+    if (binding.value !== binding.oldValue) toggleLoading(el, binding);
   }
 });
 
