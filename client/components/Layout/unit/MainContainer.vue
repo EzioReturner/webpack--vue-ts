@@ -10,7 +10,7 @@ import styles from './MainContainer.module.scss';
 
 const crumbStore = namespace('breadcrumb');
 @Component
-export default class LuckyueMainContainer extends Vue {
+export default class WvtsMainContainer extends Vue {
   @Prop(Object) readonly editStyle: any;
   @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
   @Getter(GET_LOADING) loading: boolean;
@@ -33,6 +33,7 @@ export default class LuckyueMainContainer extends Vue {
       path: fullPath,
       name: name || '',
       selected: false,
+      id: meta.id,
       meta
     };
     this.setCrumbsFN(params);
@@ -64,8 +65,10 @@ export default class LuckyueMainContainer extends Vue {
     return (
       <section style={editStyle} class={styles.mainContainer} {...{ directives }}>
         <div>
-          {position === 'breadcrumb' && <Collapsed />}
-          <Breadcrumb on-close={delCrumbFN} on-click={handleClickCrumb} props={{ crumbs }} />
+          <div class={styles.crumbRow}>
+            {position === 'breadcrumb' && <Collapsed />}
+            <Breadcrumb on-close={delCrumbFN} on-click={handleClickCrumb} props={{ crumbs }} />
+          </div>
           <main class={styles.viewBody}>
             <router-view />
           </main>

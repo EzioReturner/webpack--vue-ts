@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 import { CollapseConfig } from '@model/components/layout.model';
 
 @Component
-export default class LuckyueCollapsed extends Vue {
+export default class WvtsCollapsed extends Vue {
   @State(state => state.collapsed) _collapsed: boolean;
   @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
   @Action(SET_COLLAPSED_FN) saveCollapsedFn: Function;

@@ -1,5 +1,13 @@
 import { Commit, Module, ActionTree, MutationTree, GetterTree } from 'vuex';
-import { SET_CRUMBS, SET_CRUMBS_FN, DEL_CRUMB, DEL_CRUMB_FN, GET_CRUMBS } from '@constants/index';
+import {
+  SET_CRUMBS,
+  SET_CRUMBS_FN,
+  DEL_CRUMB,
+  DEL_CRUMB_FN,
+  GET_CRUMBS,
+  UPDATE_CRUMB,
+  UPDATE_CRUMB_FN
+} from '@constants/index';
 import { CrumbState, Crumbs } from '@model/store/breadcrumb.model';
 import { BaseState } from '@model/store/base.model';
 import Router from '@components/Router';
@@ -35,11 +43,12 @@ const mutations: MutationTree<CrumbState> = {
     Router.push({
       path: last ? last.path : '/'
     });
-  }
+  },
+  [UPDATE_CRUMB](states: any, params: Crumbs) {}
 };
 
 /**
- * 检查路由
+ * 检查crumb是否存在
  */
 const checkExists = (path: string): boolean => {
   const crumbs = state.crumbs;
@@ -62,6 +71,12 @@ const actions: ActionTree<CrumbState, BaseState> = {
    */
   [DEL_CRUMB_FN](context: { commit: Commit }, params: Crumbs) {
     context.commit(DEL_CRUMB, params);
+  },
+  /**
+   * 更新crumb FN
+   */
+  [UPDATE_CRUMB_FN](context: { commit: Commit }, params: Crumbs) {
+    context.commit(UPDATE_CRUMB, params);
   }
 };
 

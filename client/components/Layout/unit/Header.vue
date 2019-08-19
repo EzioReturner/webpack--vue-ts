@@ -7,7 +7,7 @@ import { CollapseConfig } from '@model/components/layout.model';
 import { Action, namespace, State } from 'vuex-class';
 
 @Component
-export default class LuckyueHeader extends Vue {
+export default class WvtsHeader extends Vue {
   @Prop(Object) readonly editStyle: any;
   @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
 

@@ -1,6 +1,7 @@
 .header {
   height: 60px;
   border-bottom: 1px solid #f5f5f5;
+  position: relative;
   box-sizing: border-box;
   text-align: left;
   box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, 0.05);
@@ -15,7 +16,8 @@
   }
 
   .actionPlace {
-    float: right;
+    position: absolute;
+    right: 0;
     height: 100%;
     overflow: hidden;
   }

@@ -14,6 +14,9 @@ export const SET_CRUMBS_FN = 'SET_CRUMBS_FN';
 export const DEL_CRUMB = 'DEL_CRUMB';
 export const DEL_CRUMB_FN = 'DEL_CRUMB_FN';
 export const GET_CRUMBS = 'GET_CRUMBS';
+export const UPDATE_CRUMB = 'UPDATE_CRUMB';
+export const UPDATE_CRUMB_FN = 'UPDATE_CRUMB_FN';
+
 /**
  * 接口请求loading
  */

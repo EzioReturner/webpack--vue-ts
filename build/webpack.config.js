@@ -540,7 +540,7 @@ module.exports = webpackEnv => {
 
       // html entry plugin
       new HtmlWebpackPlugin({
-        title: 'Luckyue',
+        title: 'WVTS',
         filename: 'index.html',
         template: paths.appHtml,
         inject: true
@@ -567,10 +567,10 @@ module.exports = webpackEnv => {
             // const filename = error.file.split('!').pop();
             // // error notifier
             // notifier.notify({
-            //   title: 'Luckyue',
+            //   title: 'WVTS',
             //   message: severity + ': ' + error.name,
             //   subtitle: filename || '',
-            //   icon: path.join(__dirname, 'luckyue.png')
+            //   icon: path.join(__dirname, 'WVTS.png')
             // });
           }
         }),

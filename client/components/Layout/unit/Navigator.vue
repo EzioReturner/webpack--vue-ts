@@ -8,7 +8,7 @@ import { MenuModel } from '@model/components/layout.model';
 
 const routes = constantRouterMap[0].children;
 @Component
-export default class LuckyueNavigator extends Vue {
+export default class WvtsNavigator extends Vue {
   @Prop(Object) readonly editStyle: any;
   @Prop(Boolean) readonly _collapsed: boolean;
 

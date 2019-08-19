@@ -7,4 +7,6 @@ export interface Crumbs {
   path: string;
   selected: boolean;
   meta: any;
+  closeable?: boolean;
+  id: string;
 }

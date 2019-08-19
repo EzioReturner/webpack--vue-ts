@@ -1,9 +1,9 @@
 <script lang="tsx">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Action, namespace, State } from 'vuex-class';
-import LuckyueHeader from './unit/Header.vue';
-import LuckyueNavigator from './unit/Navigator.vue';
-import LuckyueMainContainer from './unit/MainContainer.vue';
+import WvtsHeader from './unit/Header.vue';
+import WvtsNavigator from './unit/Navigator.vue';
+import WvtsMainContainer from './unit/MainContainer.vue';
 import style from './BasicLayout.module.scss';
 // @ts-ignore
 import { SET_COLLAPSE_CONFIG_FN } from '@constants/index';
@@ -11,7 +11,7 @@ import { SET_COLLAPSE_CONFIG_FN } from '@constants/index';
 /**
  * BasicLayout provied 4 slots, as below
  * @param {nav-siteTitle} :nav-title slot
- * @param {nav-siderMenu} :nav-sider-menu slot & luckyue will render route menu default if you don`t provide this slots
+ * @param {nav-siderMenu} :nav-sider-menu slot & WVTS will render route menu default if you don`t provide this slots
  * @param {header-siteTitle} :header-title, position in left side
  * @param {header-actions} :header-actions, positon in right side was used to render user actions like logout and more
  *
@@ -49,11 +49,11 @@ export default class BasicLayout extends Vue {
     return Object.keys($scopedSlots).reduce((total: any, slot: string) => {
       const [type, slotName] = slot.split('-');
       if (!['header', 'nav'].includes(type)) {
-        console.warn('Luckyue', '[BasicLayout]:', '组件未按约定传参');
+        console.warn('WVTS', '[BasicLayout]:', '组件未按约定传参');
         return;
       }
       if (!slotName) {
-        console.warn('Luckyue', '[BasicLayout]:', '组件未按约定传参');
+        console.warn('WVTS', '[BasicLayout]:', '组件未按约定传参');
         return;
       }
       !total[`${type}Slots`] && (total[`${type}Slots`] = {});
@@ -74,7 +74,7 @@ export default class BasicLayout extends Vue {
     const _headerMode = headerMode || 'header';
 
     const Navigator = (
-      <LuckyueNavigator
+      <WvtsNavigator
         {...{
           scopedSlots: navSlots,
           props: {
@@ -86,7 +86,7 @@ export default class BasicLayout extends Vue {
     );
 
     const Header = (
-      <LuckyueHeader
+      <WvtsHeader
         {...{
           scopedSlots: headerSlots,
           props: {
@@ -97,7 +97,7 @@ export default class BasicLayout extends Vue {
     );
 
     const MainContainer = (
-      <LuckyueMainContainer
+      <WvtsMainContainer
         props={{
           editStyle: mainStyle
         }}

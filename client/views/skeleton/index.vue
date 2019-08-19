@@ -32,7 +32,8 @@ export default class Skeleton extends Vue {
   private editConfig: any = {
     headerMode: 'split', // inline
     headerStyle: {
-      color: 'blue'
+      color: 'blue',
+      fontSize: '30px'
     },
     navStyle: {
       color: 'blue'

@@ -5,7 +5,7 @@ import { Action, namespace, Getter, State } from 'vuex-class';
 import { Crumbs } from '@model/store/breadcrumb.model';
 
 @Component
-export default class LuckyueBreadcrumb extends Vue {
+export default class WvtsBreadcrumb extends Vue {
   @Prop(Array) readonly crumbs: Crumbs[];
 
   /**
@@ -35,32 +35,47 @@ export default class LuckyueBreadcrumb extends Vue {
     };
 
     const CrumbRender = _crumbs.map((_crumb: Crumbs) => {
-      const { name, path, selected } = _crumb;
+      const { path, selected, name, closeable = true } = _crumb;
       const isDisplay = checkDisplay(path);
 
       return (
-        <li class={[styles.crumbUnit, isDisplay && styles.displayed]}>
+        <li class={[styles.crumbUnit, isDisplay && styles.displayed]} key={name}>
           <span class={styles.crumbName} onClick={() => handleClickCrumb(_crumb)}>
             {name}
           </span>
-          <span
-            class={styles.closeIconContainer}
-            onClick={(e: any) => {
-              e.stopPropagation();
-              handleCloseCrumb(_crumb);
-            }}
-          >
-            <a-icon type="close" class={styles.closeIcon} />
-          </span>
+          {closeable && (
+            <span
+              class={styles.closeIconContainer}
+              onClick={(e: any) => {
+                e.stopPropagation();
+                handleCloseCrumb(_crumb);
+              }}
+            >
+              <a-icon type="close" class={styles.closeIcon} />
+            </span>
+          )}
         </li>
       );
     });
 
     return (
       <div class={styles.breadcrumb}>
-        <ul class={styles.crumbList}>{CrumbRender}</ul>
+        <transition-group name="crumbList" tag="ul" class={styles.crumbList}>
+          {CrumbRender}
+        </transition-group>
       </div>
     );
   }
 }
 </script>
+
+<style lang="scss">
+.crumbList-enter,
+.crumbList-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.crumbList-leave-active {
+  position: absolute;
+}
+</style>

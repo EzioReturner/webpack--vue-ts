@@ -3,6 +3,7 @@
   box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, 0.05);
   position: relative;
   display: flex;
+  flex: 1;
 }
 
 .crumbList {
@@ -20,6 +21,7 @@
   color: rgba($color: #29d, $alpha: 0.6);
   transition: transform 0.3s, color 0.3s, margin 0.3s;
   position: relative;
+  transition: all 0.6s;
   &:hover {
     color: rgba($color: #29d, $alpha: 0.8);
     transform: scale(1.1);
@@ -40,7 +42,7 @@
     position: absolute;
     height: 5px;
     width: 5px;
-    top: 9px;
+    top: 8px;
     left: 0;
     transition: border 0.3s;
   }
