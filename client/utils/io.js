@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Notification } from 'ant-design-vue';
-import Store from '@/store';
+import $Store from '@/store';
 
 class Request {
   instance;
@@ -24,7 +24,7 @@ class Request {
     );
     this.instance.interceptors.response.use(
       response => {
-        Store.dispatch('SET_LOADING_FN', false);
+        $Store.dispatch('SET_LOADING_FN', false);
         return response;
       },
       error => {
@@ -65,7 +65,7 @@ class Request {
 
   sendRequest(method, path, data = {}) {
     let { params, options = {} } = data;
-    Store.dispatch('SET_LOADING_FN', options.noSpin !== true);
+    $Store.dispatch('SET_LOADING_FN', options.noSpin !== true);
     return this.instance[method](path, params, options).catch(this.handleError);
   }
 

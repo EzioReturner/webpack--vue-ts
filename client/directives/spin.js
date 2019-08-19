@@ -55,13 +55,11 @@ spinDirective.install = Vue => {
         if (typeof iconStyle === 'string') {
           styles = iconStyle;
         } else if (typeof iconStyle === 'object') {
-          styles = iconStyle
-            ? Object.keys(iconStyle).reduce((total, key) => {
-                const style = iconStyle[key];
-                total += `${key}:${style};`;
-                return total;
-              }, '')
-            : '';
+          styles = Object.keys(iconStyle).reduce((total, key) => {
+            const style = iconStyle[key];
+            total += `${key}:${style};`;
+            return total;
+          }, '');
         }
       }
       const spinner = Vue.extend({
