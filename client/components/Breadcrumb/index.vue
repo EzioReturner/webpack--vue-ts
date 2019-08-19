@@ -1,68 +1,33 @@
 <script lang="tsx">
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import Collapsed from '../Collapse/index.vue';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import styles from './index.module.scss';
 import { Action, namespace, Getter, State } from 'vuex-class';
-// @ts-ignore
-import { CollapseConfig } from '@model/components/layout.model';
-// @ts-ignore
 import { Crumbs } from '@model/store/breadcrumb.model';
-// @ts-ignore
-import { SET_CRUMBS_FN, DEL_CRUMB_FN, GET_CRUMBS } from '@constants/index';
 
-const crumbStore = namespace('breadcrumb');
 @Component
 export default class LuckyueBreadcrumb extends Vue {
-  @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
-  @crumbStore.Getter(GET_CRUMBS) crumbs: Crumbs[];
-  @crumbStore.Action(SET_CRUMBS_FN) setCrumbsFN: Function;
-  @crumbStore.Action(DEL_CRUMB_FN) delCrumbFN: Function;
-
-  @Watch('$route.path')
-  valueChange(val: string, oldVal: string): void {
-    this.createCrumbUnit();
-  }
-
-  mounted(): void {
-    this.createCrumbUnit();
-  }
-
-  /**
-   * 在vuex中创建crumb数据
-   */
-  createCrumbUnit(): void {
-    const { fullPath, name, meta } = this.$route;
-    const params: Crumbs = {
-      path: fullPath,
-      name: name || '',
-      selected: false,
-      meta
-    };
-    this.setCrumbsFN(params);
-  }
+  @Prop(Array) readonly crumbs: Crumbs[];
 
   /**
    * crumb点击事件
    */
   handleClickCrumb(crumb: Crumbs): void {
-    const { path } = crumb;
-    this.$router.push(path);
+    const { click } = this.$listeners;
+    const onClick: any = click;
+    onClick && onClick(crumb);
   }
 
   /**
    * crumb关闭事件
    */
   handleCloseCrumb(crumb: Crumbs): void {
-    this.delCrumbFN(crumb);
+    const { close } = this.$listeners;
+    const onClose: any = close;
+    onClose && onClose(crumb);
   }
 
   render(h: any): any {
-    const {
-      crumbs: _crumbs,
-      collapseConfig: { position },
-      handleClickCrumb,
-      handleCloseCrumb
-    } = this;
+    const { crumbs: _crumbs, handleClickCrumb, handleCloseCrumb } = this;
 
     const checkDisplay = (crumbPath: string): boolean => {
       const { fullPath } = this.$route;
@@ -93,7 +58,6 @@ export default class LuckyueBreadcrumb extends Vue {
 
     return (
       <div class={styles.breadcrumb}>
-        {position === 'breadcrumb' && <Collapsed />}
         <ul class={styles.crumbList}>{CrumbRender}</ul>
       </div>
     );

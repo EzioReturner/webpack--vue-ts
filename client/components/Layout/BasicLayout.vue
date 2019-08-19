@@ -36,8 +36,9 @@ export default class BasicLayout extends Vue {
     const { collapse } = this.editConfig;
     this.setCollapseConfigFN(collapse);
   }
+
   /**
-   * 获取 slots 方法
+   * get slots
    */
   getSlots(): any {
     const { $scopedSlots } = this;
