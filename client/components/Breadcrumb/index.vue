@@ -7,6 +7,8 @@ import { Crumbs } from '@model/store/breadcrumb.model';
 @Component
 export default class WvtsBreadcrumb extends Vue {
   @Prop(Array) readonly crumbs: Crumbs[];
+  @Prop(String) readonly propClass: string;
+  @Prop([Object, String]) readonly propStyle: Object | String;
 
   /**
    * crumb点击事件
@@ -27,7 +29,7 @@ export default class WvtsBreadcrumb extends Vue {
   }
 
   render(h: any): any {
-    const { crumbs: _crumbs, handleClickCrumb, handleCloseCrumb } = this;
+    const { crumbs: _crumbs, handleClickCrumb, handleCloseCrumb, propClass, propStyle } = this;
 
     const checkDisplay = (crumbPath: string): boolean => {
       const { fullPath } = this.$route;
@@ -60,7 +62,12 @@ export default class WvtsBreadcrumb extends Vue {
 
     return (
       <div class={styles.breadcrumb}>
-        <transition-group name="crumbList" tag="ul" class={styles.crumbList}>
+        <transition-group
+          name="crumbList"
+          tag="ul"
+          class={[styles.crumbList, propClass]}
+          style={propStyle}
+        >
           {CrumbRender}
         </transition-group>
       </div>

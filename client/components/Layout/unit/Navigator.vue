@@ -116,22 +116,24 @@ export default class WvtsNavigator extends Vue {
     const NavMenu = $scopedSlots.siderMenu ? (
       (props => $scopedSlots.siderMenu(props))()
     ) : (
-      <a-menu
-        inlineCollapsed={_collapsed}
-        mode="inline"
-        class="asideMenu"
-        style="margin-top:20px;"
-        selectedKeys={activeIndex}
-        defaultOpenKeys={openMenu}
-      >
-        {routes && getNavMenu(routes)}
-      </a-menu>
+      <div class={styles.menuContainer}>
+        <a-menu
+          inlineCollapsed={_collapsed}
+          mode="inline"
+          class="asideMenu"
+          style="margin-top:20px;"
+          selectedKeys={activeIndex}
+          defaultOpenKeys={openMenu}
+        >
+          {routes && getNavMenu(routes)}
+        </a-menu>
+      </div>
     );
 
     return (
       <aside class={[styles.navigator, _collapsed && styles.collapsed]} style={editStyle}>
         {SiteTitle}
-        <div class={styles.menuContainer}>{NavMenu}</div>
+        {NavMenu}
       </aside>
     );
   }

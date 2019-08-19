@@ -45,3 +45,49 @@
     }
   }
 }
+
+.mt {
+  margin-top: 30px;
+}
+
+.mt2 {
+  margin-top: 45px;
+}
+
+.mt1 {
+  margin-top: 20px;
+}
+
+.crumbClass {
+  li {
+    color: red;
+  }
+}
+
+.types {
+  margin-bottom: 12px;
+  & > div {
+    padding-left: 40px;
+    margin-top: 4px;
+  }
+  span {
+    color: #e96900;
+    margin: 0 2px;
+    padding: 3px 5px;
+    background-color: #f8f8f8;
+  }
+}
+
+.tips {
+  display: inline;
+  font-size: 13px;
+  color: rgba($color: #000000, $alpha: 0.4);
+}
+
+.section {
+  display: flex;
+  flex-flow: row nowrap;
+  section {
+    flex: 1;
+  }
+}

@@ -4,9 +4,9 @@ import { Action, namespace, State } from 'vuex-class';
 import WvtsHeader from './unit/Header.vue';
 import WvtsNavigator from './unit/Navigator.vue';
 import WvtsMainContainer from './unit/MainContainer.vue';
-import style from './BasicLayout.module.scss';
-// @ts-ignore
+import { CollapseConfig } from '@model/components/layout.model';
 import { SET_COLLAPSE_CONFIG_FN } from '@constants/index';
+import styles from './BasicLayout.module.scss';
 
 /**
  * BasicLayout provied 4 slots, as below
@@ -31,6 +31,7 @@ export default class BasicLayout extends Vue {
   @Prop(Object) readonly editConfig: any;
   @State(state => state.collapsed) _collapsed: any;
   @Action(SET_COLLAPSE_CONFIG_FN) setCollapseConfigFN: Function;
+  @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
 
   mounted() {
     const { collapse } = this.editConfig;
@@ -56,16 +57,17 @@ export default class BasicLayout extends Vue {
         console.warn('WVTS', '[BasicLayout]:', '组件未按约定传参');
         return;
       }
-      !total[`${type}Slots`] && (total[`${type}Slots`] = {});
+      const componentSlotName = `${type}Slots`;
+      !total[componentSlotName] && (total[componentSlotName] = {});
 
       const scope_slot = $scopedSlots[slot];
-      scope_slot && (total[`${type}Slots`][slotName] = (props: any) => scope_slot(props));
+      scope_slot && (total[componentSlotName][slotName] = (props: any) => scope_slot(props));
       return total;
     }, {});
   }
 
   render(h: any) {
-    const { _collapsed } = this;
+    const { _collapsed, collapseConfig } = this;
 
     const { navSlots, headerSlots } = this.getSlots();
 
@@ -90,7 +92,8 @@ export default class BasicLayout extends Vue {
         {...{
           scopedSlots: headerSlots,
           props: {
-            editStyle: headerStyle
+            editStyle: headerStyle,
+            collapseConfig: collapseConfig
           }
         }}
       />
@@ -105,9 +108,9 @@ export default class BasicLayout extends Vue {
     );
 
     const SplitLayout = (
-      <section class={style.splitLayout}>
+      <section class={styles.splitLayout}>
         {Navigator}
-        <section class={[style.container, _collapsed && style.collapsed]}>
+        <section class={[styles.container, _collapsed && styles.collapsed]}>
           {Header}
           {MainContainer}
         </section>
@@ -115,9 +118,9 @@ export default class BasicLayout extends Vue {
     );
 
     const InlineLayout = (
-      <section class={style.inlineLayout}>
+      <section class={styles.inlineLayout}>
         {Header}
-        <section class={[style.container, style.inline]}>
+        <section class={[styles.container, styles.inline]}>
           {Navigator}
           {MainContainer}
         </section>

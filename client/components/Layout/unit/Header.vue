@@ -1,16 +1,19 @@
 <script lang="tsx">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Collapsed from '../../Collapse/index.vue';
-import styles from './Header.module.scss';
-// @ts-ignore
 import { CollapseConfig } from '@model/components/layout.model';
 import { Action, namespace, State } from 'vuex-class';
+import styles from './Header.module.scss';
 
 @Component
 export default class WvtsHeader extends Vue {
   @Prop(Object) readonly editStyle: any;
-  @State(state => state.collapseConfig) collapseConfig: CollapseConfig;
-
+  @Prop({
+    default() {
+      return {};
+    }
+  })
+  readonly collapseConfig: CollapseConfig;
   render(h: any) {
     const { $scopedSlots, editStyle } = this;
 
@@ -29,7 +32,7 @@ export default class WvtsHeader extends Vue {
     return (
       <header class={styles.header} style={editStyle}>
         {SiteTitle && <div class={styles.titlePlace}>{SiteTitle}</div>}
-        {position === 'header' && <Collapsed />}
+        {position && position === 'header' && <Collapsed />}
         {Actions && <div class={styles.actionPlace}>{Actions}</div>}
       </header>
     );
