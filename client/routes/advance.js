@@ -19,19 +19,19 @@ export default {
       name: ADVANCE_ROUTER,
       path: 'router',
       icon: 'interation',
-      component: () => import(/* webpackChunkName: "page" */ '@views/advance/router.vue')
+      component: () => import(/* webpackChunkName: "router" */ '@views/advance/router.vue')
     },
     {
       name: ADVANCE_BREADCRUMB,
       path: 'breadcrumb',
       icon: 'read',
-      component: () => import(/* webpackChunkName: "page" */ '@views/advance/breadcrumb.vue')
+      component: () => import(/* webpackChunkName: "breadcrumb" */ '@views/advance/breadcrumb.vue')
     },
     {
       name: ADVANCE_LAYOUT,
       path: 'layout',
       icon: 'appstore',
-      component: () => import(/* webpackChunkName: "page" */ '@views/advance/layout.vue')
+      component: () => import(/* webpackChunkName: "layout" */ '@views/advance/layout.vue')
     },
     {
       name: ADVANCE_REQUEST_API,

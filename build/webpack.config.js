@@ -531,12 +531,13 @@ module.exports = webpackEnv => {
           chunkFilename: 'static/css/[name].[contenthash:8].chunk.css'
         }),
 
-      new ForkTsCheckerWebpackPlugin({
-        vue: true,
-        tslint: false,
-        formatter: 'codeframe',
-        checkSyntacticErrors: false
-      }),
+      isEnvDevelopment &&
+        new ForkTsCheckerWebpackPlugin({
+          vue: true,
+          tslint: false,
+          formatter: 'codeframe',
+          checkSyntacticErrors: false
+        }),
 
       // html entry plugin
       new HtmlWebpackPlugin({

@@ -14,7 +14,7 @@ export const constantRouterMap = [
     path: '/',
     name: SKELETON,
     redirect: '/homeview',
-    component: () => import(/* webpackChunkName: "basicLayout" */ '@views/skeleton/index.vue'),
+    component: () => import(/* webpackChunkName: "skeleton" */ '@views/skeleton/index.vue'),
     meta: {
       hiddenMenu: true
     },
@@ -23,7 +23,7 @@ export const constantRouterMap = [
         path: 'homeview',
         name: HOME_VIEW,
         icon: 'fund',
-        component: () => import(/* webpackChunkName: "basicLayout" */ '@views/home/index.vue')
+        component: () => import(/* webpackChunkName: "homeview" */ '@views/home/index.vue')
       },
       introduction,
       advance,
@@ -35,8 +35,7 @@ export const constantRouterMap = [
           hiddenMenu: true,
           pass: true
         },
-        component: () =>
-          import(/* webpackChunkName: "basicLayout" */ '@components/Exception/404.vue')
+        component: () => import(/* webpackChunkName: "Exception" */ '@components/Exception/404.vue')
       }
     ]
   }

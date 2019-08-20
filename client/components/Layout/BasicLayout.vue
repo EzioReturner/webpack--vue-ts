@@ -48,8 +48,8 @@ export default class BasicLayout extends Vue {
       return;
     }
     return Object.keys($scopedSlots).reduce((total: any, slot: string) => {
-      const [type, slotName] = slot.split('-');
-      if (!['header', 'nav'].includes(type)) {
+      const [componentName, slotName] = slot.split('-');
+      if (!['header', 'nav'].includes(componentName)) {
         console.warn('WVTS', '[BasicLayout]:', '组件未按约定传参');
         return;
       }
@@ -57,11 +57,11 @@ export default class BasicLayout extends Vue {
         console.warn('WVTS', '[BasicLayout]:', '组件未按约定传参');
         return;
       }
-      const componentSlotName = `${type}Slots`;
-      !total[componentSlotName] && (total[componentSlotName] = {});
+      const slotKey = `${componentName}Slots`;
+      !total[slotKey] && (total[slotKey] = {});
 
       const scope_slot = $scopedSlots[slot];
-      scope_slot && (total[componentSlotName][slotName] = (props: any) => scope_slot(props));
+      scope_slot && (total[slotKey][slotName] = (props: any) => scope_slot(props));
       return total;
     }, {});
   }
