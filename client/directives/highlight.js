@@ -2,7 +2,7 @@ import * as hljs from 'highlight.js/lib/highlight';
 import javascript from 'highlight.js/lib/languages/javascript';
 import xml from 'highlight.js/lib/languages/xml';
 hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('htmlbars', xml);
+hljs.registerLanguage('xml', xml);
 import 'highlight.js/styles/atom-one-light.css';
 
 const hljsDirective = {};
