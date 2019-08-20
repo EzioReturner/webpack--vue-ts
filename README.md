@@ -41,13 +41,7 @@ yarn install  Or  npm install
 - 客户端启动
 
 ```bash
-yarn start-client  Or  npm run start-client
-```
-
-- 服务端启动
-
-```bash
-yarn start-server  Or  npm run start-server
+yarn start  Or  npm run start
 ```
 
 4. 启动完成后打开浏览器访问 [http://localhost:9527](http://localhost:9527)，如果需要更改启动端口，可在 .env 文件中配置。
