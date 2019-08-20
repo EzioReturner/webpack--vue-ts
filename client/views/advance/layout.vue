@@ -119,7 +119,9 @@ export default {
         </WvtsHeader>
         <WvtsNavigator>
           <div slot="siteTitle">siteTitle-slots</div>
-          <div slot="siderMenu">siderMenu-slots</div>
+          <div slot="siderMenu" style="margin-top:20px;">
+            siderMenu-slots
+          </div>
         </WvtsNavigator>
       </section>
     );
