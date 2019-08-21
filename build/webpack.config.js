@@ -287,7 +287,10 @@ module.exports = webpackEnv => {
               use: getStyleLoaders({
                 importLoaders: 2,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
-                modules: true
+                modules: {
+                  mode: 'local',
+                  localIdentName: '[name]__[local]--[hash:base64:5]'
+                }
               })
             },
             /* config.module.rule('scss|sass') */
@@ -303,7 +306,7 @@ module.exports = webpackEnv => {
                       importLoaders: 2,
                       modules: {
                         mode: 'local',
-                        localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                        localIdentName: '[name]__[local]--[hash:base64:5]'
                       }
                     },
                     'sass-loader'

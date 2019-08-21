@@ -1,7 +1,11 @@
 module.exports = {
-  presets: ['@vue/app', '@vue/babel-preset-jsx', ['@babel/preset-env', { modules: false }]],
+  presets: [
+    '@vue/app',
+    ['@vue/babel-preset-jsx', { injectH: false }],
+    ['@babel/preset-env', { modules: false }]
+  ],
   plugins: [
-    'transform-vue-jsx',
+    'jsx-v-model',
     'transform-class-properties',
     ['import', { libraryName: 'ant-design-vue', libraryDirectory: 'es', style: true }]
   ]
