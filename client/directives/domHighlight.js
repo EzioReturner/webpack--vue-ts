@@ -1,5 +1,5 @@
 /**
- * dom高亮指令
+ * 高亮指令
  */
 
 const hlDirective = {};
@@ -11,22 +11,26 @@ hlDirective.install = Vue => {
     return hlDOM;
   };
 
-  const renderHighligh = (el, query, elInnerText) => {
-    const text = el.innerText || elInnerText;
-    const container = document.createElement('span');
-    const splits = text.split(query);
-    const existEmpty = splits.some(res => !res);
-    existEmpty
-      ? splits.forEach(letter => {
-          const dom = letter ? document.createTextNode(letter) : createHighlightText(query);
-          container.appendChild(dom);
-        })
-      : splits.forEach((letter, index) => {
-          const letterSpan = document.createTextNode(letter);
-          const querySpan = createHighlightText(query);
-          container.appendChild(letterSpan);
-          index !== splits.length - 1 && container.appendChild(querySpan);
-        });
+  const renderHighligh = (el, query) => {
+    const text = el.innerText;
+    let container = document.createElement('span');
+    if (text === query) {
+      container = createHighlightText(query);
+    } else {
+      const splits = text.split(query);
+      const existEmpty = splits.some(res => !res);
+      existEmpty
+        ? splits.forEach(letter => {
+            const dom = letter ? document.createTextNode(letter) : createHighlightText(query);
+            container.appendChild(dom);
+          })
+        : splits.forEach((letter, index) => {
+            const letterSpan = document.createTextNode(letter);
+            const querySpan = createHighlightText(query);
+            container.appendChild(letterSpan);
+            index !== splits.length - 1 && container.appendChild(querySpan);
+          });
+    }
     el.innerHTML = container.innerHTML;
   };
 
