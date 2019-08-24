@@ -11,25 +11,27 @@ hlDirective.install = Vue => {
     return hlDOM;
   };
 
+  const checkText = (dom, text, query) => {
+    const index = text.indexOf(query);
+    if (index < 0) {
+      dom.appendChild(document.createTextNode(text));
+      return dom;
+    }
+    const queryScope = index + query.length;
+    const head = text.slice(0, index);
+    const surplus = text.substr(queryScope);
+    dom.appendChild(document.createTextNode(head));
+    dom.appendChild(createHighlightText(query));
+    return checkText(dom, surplus, query);
+  };
+
   const renderHighligh = (el, query) => {
     const text = el.innerText;
     let container = document.createElement('span');
     if (text === query) {
       container = createHighlightText(query);
     } else {
-      const splits = text.split(query);
-      const existEmpty = splits.some(res => !res);
-      existEmpty
-        ? splits.forEach(letter => {
-            const dom = letter ? document.createTextNode(letter) : createHighlightText(query);
-            container.appendChild(dom);
-          })
-        : splits.forEach((letter, index) => {
-            const letterSpan = document.createTextNode(letter);
-            const querySpan = createHighlightText(query);
-            container.appendChild(letterSpan);
-            index !== splits.length - 1 && container.appendChild(querySpan);
-          });
+      container = checkText(container, text, query);
     }
     el.innerHTML = container.innerHTML;
   };
