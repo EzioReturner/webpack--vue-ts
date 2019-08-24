@@ -44,7 +44,11 @@ hlDirective.install = Vue => {
     update: (el, binding) => {
       Vue.nextTick(() => {
         const query = binding.value;
-        query && renderHighligh(el, query);
+        if (query) {
+          renderHighligh(el, query);
+        } else {
+          el.innerHTML = el.innerText;
+        }
       });
     }
   });
