@@ -1,5 +1,11 @@
 /**
  * 高亮指令
+ * 使用方法： 在dom上挂载 v-hl 指令
+ * 例如
+ * let query = '测'
+ * <span v-hl="query">测试</span>
+ * 可以提供 prop @param {string} hlDefault 来设置初始数据
+ * 如果存在 hlDefault 将在 query 为空时用 hlDefault 覆盖el.innerHTML
  */
 
 const hlDirective = {};
@@ -26,10 +32,11 @@ hlDirective.install = Vue => {
   };
 
   const renderHighligh = (el, query) => {
-    const text = el.innerText;
+    const _default = el.getAttribute('hlDefault');
+    const text = _default || el.innerText;
     let container = document.createElement('span');
     if (text === query) {
-      container = createHighlightText(query);
+      container.appendChild(createHighlightText(query));
     } else {
       container = checkText(container, text, query);
     }
@@ -44,10 +51,11 @@ hlDirective.install = Vue => {
     update: (el, binding) => {
       Vue.nextTick(() => {
         const query = binding.value;
+        const _default = el.getAttribute('hlDefault');
         if (query) {
           renderHighligh(el, query);
         } else {
-          el.innerHTML = el.innerText;
+          el.innerHTML = _default || el.innerText;
         }
       });
     }
