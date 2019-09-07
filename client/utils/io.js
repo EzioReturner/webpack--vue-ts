@@ -75,8 +75,9 @@ class Request {
     if (params) {
       _path += '?';
       Object.keys(params).forEach(key => {
-        _path += `${key}=${params[key]}`;
+        _path += `${key}=${params[key]}&`;
       });
+      _path = _path.replace(/&$/, '');
     }
     return this.sendRequest('get', _path, data);
   }
